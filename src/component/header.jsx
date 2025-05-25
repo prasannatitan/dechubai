@@ -45,7 +45,7 @@ const Header = () => {
       `}
         >
             <div className='max-w-[1440px] md:px-10 px-5 py-1 mx-auto flex align-center justify-between'>
-                <div><Link to='/home'><img className='lg:w-[60px] w-[44px]' src={dechublogo} alt="dechub logo" /></Link></div>
+                <div><Link to='/'><img className='lg:w-[60px] w-[44px]' src={dechublogo} alt="dechub logo" /></Link></div>
                 <div className='flex max-md:hidden items-center'>
                     <ul className='flex lg:gap-10 gap-2 items-center'>
                         {menu.map((menu, idx) => {
