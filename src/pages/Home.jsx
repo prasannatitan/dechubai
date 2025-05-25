@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Section from '../component/section'
+import Reviewslide from '../component/reviewslide'
 
 import circle from '../assets/home/circles.webp'
 import comboxbg from '../assets/home/Component box bg.png'
@@ -286,10 +287,10 @@ const Home = () => {
             <Section>
                 <div className='max-w-[1440px] mt-5 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
                     <div className='flex max-lg:flex-col'>
-                        <div className='w-[50%] max-lg:w-[100%] flex justify-center items-start '>
+                        <div className='w-[55%] max-lg:w-[100%] flex justify-center items-start '>
                             <h3 className='px-9 py-[6px] max-sm:px-7 text-center max-sm:text-[17px] text-[#643A97] font-semibold text-[18px] border-1 border-[rgba(0,0,0,0.31)] rounded-[3px] shadow-[0px_13px_44.4px_rgba(230,174,238,0.52)]'>NEVER START FROM SCRATCH</h3>
                         </div>
-                        <div className='w-[50%] max-lg:mt-5 max-lg:w-[100%] max-lg:flex-col max-lg:flex justify-center items-center'>
+                        <div className='w-[45%] max-lg:mt-5 max-lg:w-[100%] max-lg:flex-col max-lg:flex justify-center items-center'>
                             <h3 className='text-[48px] max-sm:text-[30px] max-lg:text-[37px] max-lg:leading-[45px] max-sm:leading-[40px] font-bold leading-[60px] max-lg:text-center '>Why Dechub.ai?<br /> The Differentiator</h3>
                             <p className='opacity-[0.63] text-semibold text-[#000] max-lg:text-center max-sm:text-[19px] text-[23px] max-lg:text-[19px] leading-[30px] max-lg:leading-[25px] max-w-[450px] max-lg:max-w-[350px] mt-3'>Unlike traditional agencies, we don’t just ‘plan’ – we ‘execute’ with AI precision!</p>
                         </div>
@@ -298,11 +299,11 @@ const Home = () => {
             </Section>
             <Section>
                 <div className="max-w-[1440px] mt-5 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10">
-                    <div>
-                        <div>
-
+                    <div className='flex max-lg:flex-col mt-10'>
+                        <div className='w-[50%] max-lg:w-[100%]'>
+                            <Reviewslide />
                         </div>
-                        <div className="flex gap-10 max-sm:gap-3">
+                        <div className="w-[50%] max-lg:w-[100%] flex gap-10 max-sm:gap-3">
                             <div className="flex flex-col items-center -mt-[10px] max-sm:mt-0">
                                 {steps.map((_, i) => (
                                     <div key={i} className="flex items-center flex-col">
