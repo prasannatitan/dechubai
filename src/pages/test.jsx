@@ -1,86 +1,110 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+'use client'
 
-import cyber1 from '../assets/home/cyber1.webp'
-import cyber2 from '../assets/home/cyber2.webp'
-import cyber3 from '../assets/home/cyber3.webp'
-import cyber4 from '../assets/home/cyber4.webp'
-import cyber5 from '../assets/home/cyber5.webp'
-import cyber6 from '../assets/home/cyber6.webp'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-import web1 from '../assets/home/web1.webp'
-import web2 from '../assets/home/web2.webp'
-import web3 from '../assets/home/web3.webp'
-import web4 from '../assets/home/web4.webp'
-import web5 from '../assets/home/web5.webp'
-import web6 from '../assets/home/web6.webp'
+const testimonials = [
+  {
+    text: "Dechub.ai completely transformed our brand identity and online presence! Their AI-driven strategies gave us a 40% boost in engagement within 3 months!",
+    author: "Aarav Mehta",
+    position: "CEO of GrowthHub",
+  },
+  {
+    text: "With Dechub.ai, our marketing ROI doubled. Their insights and execution are top-notch!",
+    author: "Pankaj Verma",
+    position: "Co-Founder of ScaleUp",
+  },
+  {
+    text: "Their AI tools changed the game for our customer engagement strategy!",
+    author: "Keval Shah",
+    position: "Marketing Head at BizNova",
+  },
+]
 
-import tech1 from '../assets/home/tech1.webp'
-import tech2 from '../assets/home/tech2.webp'
-import tech3 from '../assets/home/tech3.webp'
-import tech4 from '../assets/home/tech4.webp'
-import tech5 from '../assets/home/tech5.webp'
-import tech6 from '../assets/home/tech6.webp'
+const Slide = ({ testimonial, type }) => {
+  const baseStyle = "absolute w-[300px] p-6 rounded-xl border shadow-lg transition-all duration-500"
 
-import soft1 from '../assets/home/soft1.webp'
-import soft2 from '../assets/home/soft2.webp'
-import soft3 from '../assets/home/soft3.webp'
-import soft4 from '../assets/home/soft4.webp'
-import soft5 from '../assets/home/soft5.webp'
-import soft6 from '../assets/home/soft6.webp'
+  const variants = {
+    active: {
+      initial: { opacity: 0, x: 100, scale: 0.95 },
+      animate: { opacity: 1, x: 0, scale: 1, y: 0 },
+      exit: { opacity: 0, x: -100, scale: 0.95 },
+      className: `${baseStyle} bg-white z-20`,
+    },
+    prev: {
+      initial: { opacity: 0, x: -200, scale: 0.9 },
+      animate: { opacity: 0.7, x: -160, scale: 0.9, y: -20 },
+      exit: { opacity: 0, x: -200, scale: 0.9 },
+      className: `${baseStyle} bg-blue-100 z-10`,
+    },
+    next: {
+      initial: { opacity: 0, x: 200, scale: 0.9 },
+      animate: { opacity: 0.7, x: 160, scale: 0.9, y: 20 },
+      exit: { opacity: 0, x: 200, scale: 0.9 },
+      className: `${baseStyle} bg-blue-100 z-10`,
+    },
+  }
 
-
-export default function test() {
-  const tabs = [
-    { name: "Branding", content: [cyber1, cyber2, cyber3, cyber4, cyber5, cyber6] },
-    { name: "Web& Apps", content: [web1, web2, web3, web4, web5, web6] },
-    { name: "MarTech", content: [tech1, tech2, tech3, tech4, tech5, tech6 ] },
-    { name: "Custom Software", content: [soft1, soft2, soft3, soft4, soft5, soft6]}
-  ];
-
-  const [activeTab, setActiveTab] = useState(0);
+  const variant = variants[type]
 
   return (
-    <div className="max-w-[1440px] mt-100 mx-auto p-4">
-     <div className="flex justify-center pb-10">
-       <div className="flex w-[fit-content] bg-[#F0E3FF] p-[10px] rounded-[12px]"> 
-        {tabs.map((tab, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveTab(index)}
-            className={`py-2 px-4 text-[16px] rounded-[11px] cursor-pointer transition-colors text-[#380A71] ${
-              activeTab === index
-                ? "text-white font-medium bg-[#200047]"
-                : "text-[#380A71] font-medium px-8"
-            }`}
-          >
-            {tab.name}
-          </button>
-        ))}
+    <motion.div
+      className={variant.className}
+      initial={variant.initial}
+      animate={variant.animate}
+      exit={variant.exit}
+      transition={{ duration: 0.2 }}
+    >
+      <p className="text-gray-800 text-base mb-4">"{testimonial.text}"</p>
+      <div className="flex items-center gap-3 mt-4">
+        <div className="w-1 h-10 bg-purple-600 rounded"></div>
+        <div>
+          <p className="font-semibold text-gray-900">{testimonial.author},</p>
+          <p className="text-sm text-gray-600">{testimonial.position}</p>
+        </div>
       </div>
-     </div>
+    </motion.div>
+  )
+}
 
-      <div className="p-4 text-gray-700">
+export default function test() {
+  const [index, setIndex] = useState(0)
+  const total = testimonials.length
+
+  const prevIndex = (index - 1 + total) % total
+  const nextIndex = (index + 1) % total
+
+  // Autoplay
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % total)
+    }, 5000) // change every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="relative w-full h-[350px] flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative w-[600px] h-[280px] flex items-center justify-center">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-3 gap-14"
-          >
-            
-            {Array.isArray(tabs[activeTab].content) ? (
-              tabs[activeTab].content.map((itm, idx) => (
-                <img key={idx} src={itm} className="rounded-[15px]"/>
-              ))
-            ) : (
-              <span>{tabs[activeTab].content}</span>
-            )}
-          </motion.div>
+          <Slide key={`prev-${prevIndex}`} testimonial={testimonials[prevIndex]} type="prev" />
+          <Slide key={`active-${index}`} testimonial={testimonials[index]} type="active" />
+          <Slide key={`next-${nextIndex}`} testimonial={testimonials[nextIndex]} type="next" />
         </AnimatePresence>
       </div>
+
+      {/* Pagination Dots */}
+      <div className="flex gap-2 mt-6">
+        {testimonials.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              i === index ? 'bg-blue-600 scale-125' : 'bg-blue-300'
+            }`}
+          ></button>
+        ))}
+      </div>
     </div>
-  );
+  )
 }
