@@ -7,15 +7,8 @@ import Strategic from './pages/Strategic'
 import Test from './pages/test'
 import DigitalExperience from './pages/DigitalExperienceServices'
 import PerformanceMarketing from './pages/PerformanceMarketing'
+
 function App() {
- useEffect(() => {
-    const imgs = document.querySelectorAll('img');
-    imgs.forEach(img => {
-      if (!img.hasAttribute('loading')) {
-        img.setAttribute('loading', 'lazy');
-      }
-    });
-  }, []);
   return (
       <BrowserRouter>
       <Header/>
