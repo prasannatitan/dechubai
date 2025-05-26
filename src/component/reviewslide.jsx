@@ -89,7 +89,7 @@ export default function reviewslide() {
   }, [])
 
   return (
-    <div className="lg:ml-[-100px] relative w-full h-[350px] flex flex-col items-center justify-center mb-20">
+    <div className="lg:ml-[-100px] relative w-full h-[350px] flex flex-col items-center justify-center mb-10">
       <div className=" relative w-[600px] h-[280px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           <Slide key={`prev-${prevIndex}`} testimonial={testimonials[prevIndex]} type="prev" />

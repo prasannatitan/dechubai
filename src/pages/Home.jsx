@@ -285,7 +285,7 @@ const Home = () => {
                 <img className='max-md:h-[300px] max-md:-mt-43 w-full h-[740px] z-5 -mt-100 z-2 relative' src={round} alt="round" />
             </Section>
             <Section>
-                <div className='max-w-[1440px] mt-5 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
+                <div className='max-w-[1440px] -mt-40 max-lg:-mt-10 max-md:-mt-20 z-5 relative md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
                     <div className='flex max-lg:flex-col'>
                         <div className='w-[55%] max-lg:w-[100%] flex justify-center items-start '>
                             <h3 className='px-9 py-[6px] max-sm:px-7 text-center max-sm:text-[17px] text-[#643A97] font-semibold text-[18px] border-1 border-[rgba(0,0,0,0.31)] rounded-[3px] shadow-[0px_13px_44.4px_rgba(230,174,238,0.52)]'>NEVER START FROM SCRATCH</h3>
@@ -298,9 +298,9 @@ const Home = () => {
                 </div>
             </Section>
             <Section>
-                <div className="max-w-[1440px] mt-5 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10">
+                <div className="max-w-[1440px] mt-5 max-md:mt-0 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10">
                     <div className='flex max-lg:flex-col mt-10'>
-                        <div className='w-[50%] max-lg:w-[100%]'>
+                        <div className='w-[50%] max-lg:w-[100%] max-md:overflow-hidden'>
                             <Reviewslide />
                         </div>
                         <div className="w-[50%] max-lg:w-[100%] flex gap-10 max-sm:gap-3">
