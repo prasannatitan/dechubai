@@ -91,7 +91,7 @@ const Home = () => {
     const [direction, setDirection] = useState(1);
    
     const {isAuthenticated}= useAuth()
-console.log(isAuthenticated)
+
    
     useEffect(() => {
         const interval = setInterval(() => {

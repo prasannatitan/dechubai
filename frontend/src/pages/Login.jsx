@@ -14,7 +14,7 @@ const Login = () => {
 	const { user, setUser } = useContext(UserDataContext)
 	const navigate = useNavigate()
 
-console.log('API BASE URL:', import.meta.env.VITE_BASE_URL);
+
 
 
 	const submitHandler = async (e) => {

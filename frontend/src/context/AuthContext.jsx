@@ -8,19 +8,30 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-
-
-        axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        const checkAuth = async () => {
+            try {
+                const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+    
+                if (data.success) {
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            } catch (error) {
+                console.log(error);
+                setIsAuthenticated(false);
             }
-        }).then(response => {
-            if (response.status === 200) {
-                setIsAuthenticated(true)
-            }
-        })
-
-    }, [token])
+        };
+        if (token) {
+            checkAuth();
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, [token]);
 
     return (
         <AuthContext.Provider value={{ isAuthenticated }}>
