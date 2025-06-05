@@ -38,6 +38,7 @@ const Signup = () => {
         
             if (data.success) {
                 setUser(data.user)
+                console.log(data.user)
                 localStorage.setItem('token', data.token)
                 navigate('/')
                 setEmail('')

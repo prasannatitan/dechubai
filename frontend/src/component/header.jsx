@@ -61,7 +61,7 @@ const Header = () => {
                         {isAuthenticated ? (
                             <>
                                 <li className='bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] inline-block mx-4 lg:text-[18px] text-[15px] font-[500] text-[#fff] px-7 rounded-3xl py-2 cursor-pointer'>
-                                    <Link to='/dashboard'>Dashboard</Link>
+                                    <Link to='/dashboard/home'>Dashboard</Link>
                                 </li>
                                
                             </>

@@ -21,15 +21,15 @@ module.exports.registerUser = async (req, res, next) => {
 
     const hashedPassword = await userModel.hashPassword(password)
 
-    const user = await userService.createUser({
+    const nuser = await userService.createUser({
         firstname: fullname.firstname,
         lastname: fullname.lastname,
         email,
         password: hashedPassword
     })
-
+ const user = await userModel.findOne({ email });
     const token = user.generateAuthToken();
-console.log(user)
+
     res.json({success:true, token, user })
 }
 
