@@ -9,7 +9,7 @@ const captainRoutes = require('./routes/captain.routes')
 const cookieParser = require('cookie-parser')
 
 app.use(cors({
-    origin: 'https://dechub.ai',
+    origin: 'https://www.dechub.ai',
     credentials: true
 }));
 app.use(express.json());
