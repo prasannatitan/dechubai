@@ -9,7 +9,7 @@ import Layout from '../../dashboard/Layout'
 
 import explore from '../../assets/dashboard/explore.webp'
 import services from '../../assets/dashboard/services.webp'
-import book from '../../assets/dashboard/book.svg'
+import book from '../../assets/dashboard/Book.svg'
 import chart from '../../assets/dashboard/Chart Pie.svg'
 import eye from '../../assets/dashboard/eye.svg'
 import chartbar from '../../assets/dashboard/chartbar.svg'
