@@ -3,7 +3,7 @@ import Layout from '../../dashboard/Layout'
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 
-import book from '../../assets/dashboard/book.svg'
+import bookicon from '../../assets/dashboard/bookicon.svg'
 
 const fakeAPIData = {
     lineData: {
@@ -60,7 +60,7 @@ const analytics = () => {
             <div className="p-6 w-full  flex flex-col gap-5">
 
                 <div className="bg-white shadow-md rounded-xl p-6 pt-4">
-                    <div className="text-lg font-semibold mb-4 flex gap-2"><img src={book} alt="book" /> <p>Social Media Performance</p></div>
+                    <div className="text-lg font-semibold mb-4 flex gap-2"><img src={bookicon} alt="book" /> <p>Social Media Performance</p></div>
                     <div className="h-[300px]">
                         <Line
                             data={data.lineData}

@@ -9,7 +9,7 @@ import Layout from '../../dashboard/Layout'
 
 import explore from '../../assets/dashboard/explore.webp'
 import services from '../../assets/dashboard/services.webp'
-import book from '../../assets/dashboard/Book.svg'
+import bookicon from '../../assets/dashboard/bookicon.svg'
 import chart from '../../assets/dashboard/Chart Pie.svg'
 import eye from '../../assets/dashboard/eye.svg'
 import chartbar from '../../assets/dashboard/chartbar.svg'
@@ -101,7 +101,7 @@ const Dashboard = () => {
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2">
 
-                    <img src={book} alt="book" />
+                    <img src={bookicon} alt="book" />
                     <h2 className="font-bold  text-[16px]">Task List and Deadlines</h2>
                   </div>
                   <button className="text-purple-600 text-xl">+</button>
