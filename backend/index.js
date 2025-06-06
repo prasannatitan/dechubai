@@ -8,10 +8,11 @@ const userRoutes = require('./routes/user.routes')
 const captainRoutes = require('./routes/captain.routes')
 const cookieParser = require('cookie-parser')
 
-app.use(cors({
-    origin: 'https://www.dechub.ai',
-    credentials: true
-}));
+// app.use(cors({
+//     origin: 'https://www.dechub.ai',
+//     credentials: true
+// }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
