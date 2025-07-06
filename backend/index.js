@@ -12,7 +12,7 @@ const gsheet = require('./routes/gSheet');
 
 const allowedOrigins = [
   "https://www.dechub.ai",
-  "https://www.admin.dechub.ai"
+  "https://admin.dechub.ai"
 ];
 
 app.use(cors({
