@@ -6,7 +6,7 @@ import Layout from "../../dashboard/Layout";
 import 'remixicon/fonts/remixicon.css'
 import axios from "axios";
 import { toast } from "react-toastify";
-import Uploadbox from "../../component/uploadBox";
+import Uploadbox from "../../component/UploadBox";
 
 const test = () => {
   const [folders, setFolders] = useState([{
