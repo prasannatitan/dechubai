@@ -10,12 +10,16 @@ const cors = require('cors');
 const app = express();
 const gsheet = require('./routes/gSheet');
 
+const allowedOrigins = [
+  "https://www.dechub.ai",
+  "https://www.admin.dechub.ai"
+];
 
-// app.use(cors({
-//   origin: 'https://www.dechub.ai', 
-//   credentials: true 
-// }));
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins, 
+  credentials: true 
+}));
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
