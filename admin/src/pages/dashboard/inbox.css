@@ -1,0 +1,6 @@
+.table-div div{
+width: 18%;
+}
+.table-div div:nth-child(5){
+    width: 28%;
+}

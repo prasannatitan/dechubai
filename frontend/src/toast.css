@@ -1,0 +1,46 @@
+/* toast.css */
+
+.Toastify__toast {
+  border-radius: 12px;
+  font-size: 15px;
+  padding: 14px 20px;
+  backdrop-filter: blur(8px);
+  background-color: #ffffff3f;
+  color: #111;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e6e6e6;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease-in-out;
+}
+
+.Toastify__toast--success {
+  border-left: 4px solid #8900c43f;
+}
+
+.Toastify__toast--error {
+  border-left: 4px solid #f44336;
+}
+
+.Toastify__toast--info {
+  border-left: 4px solid #007bff;
+}
+
+.Toastify__toast--warning {
+  border-left: 4px solid #ffc107;
+}
+
+.Toastify__close-button {
+  color: #2b2424;
+  opacity: 1;
+  transition: color 0.2s ease;
+}
+
+.Toastify__close-button:hover {
+  color: #111;
+}
+
+.Toastify__progress-bar {
+  background: #3E0F77 !important;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+}

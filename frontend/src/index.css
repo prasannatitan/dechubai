@@ -1,0 +1,89 @@
+@import "tailwindcss";
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes water-shift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  .animate-water {
+    animation: water-shift 3s ease-in-out infinite alternate;
+    background-size: 200% 100%; /* gives us room to slide */
+  }
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+.in-sl{
+  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.25));
+  height: inherit;
+}
+.revercbox .ghf:nth-child(odd){
+ flex-direction: row-reverse;
+} 
+
+.kjs:nth-child(odd){
+ flex-direction: row-reverse;
+} 
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+.rev-slide{
+  width: 300px !important;
+}
+.bg-custom-conic::before {
+  background: conic-gradient(
+    from 187.27deg at 40.63% 50.41%,
+    rgba(159, 115, 241, 0) -48.92deg,
+    rgba(242, 98, 181, 0) 125.18deg,
+    #5FC5FF 193.41deg,
+    #FFAC89 216.02deg,
+    #8155FF 236.07deg,
+    #789DFF 259.95deg,
+    rgba(159, 115, 241, 0) 311.08deg,
+    rgba(242, 98, 181, 0) 485.18deg
+  );
+}
+.divider{
+      background: radial-gradient(50% 50% at 50% 50%, rgb(0 0 0 / 34%) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.doller{
+  font-weight: 600;
+}
+@media (min-width:1210px){
+  .price-box:nth-child(2){
+  width: 370px !important;
+  margin-bottom: 10px;
+}
+.price-box:nth-child(2) .price-points{
+  padding: 10px 0 10px 0;
+  width: 240px;
+}
+.price-box:nth-child(2) .price-btn{
+  margin: 15px 0;
+}
+.price-box:nth-child(2) .divider{
+  margin-top: 10px;
+}
+}
+.inter{
+  font-family: "Inter", sans-serif !important;
+}

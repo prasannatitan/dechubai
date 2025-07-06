@@ -1,0 +1,19 @@
+.swiper-button-prev{
+    top: 19px !important;
+    right: 35px !important;
+    left: auto !important;
+   
+}
+.swiper-button-prev:after, .swiper-button-next:after{
+    font-size: 17px !important;
+    font-weight: 900 !important;
+}
+.swiper-button-next{
+    top: 19px !important;
+
+   
+}
+.jkkk{
+    position: static !important;
+    margin-left: 0 !important;
+}

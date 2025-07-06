@@ -1,0 +1,24 @@
+@import "tailwindcss";
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes water-shift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  .animate-water {
+    animation: water-shift 3s ease-in-out infinite alternate;
+    background-size: 200% 100%; /* gives us room to slide */
+  }
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
