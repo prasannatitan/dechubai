@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom"
-
+import { useAuth } from "../context/UserContext";
+import logouts from '../assets/dashboard/log out.svg'
 import logo from '../assets/dechub logo.png'
 
 import dashboard from '../assets/dashboard/dashboard.svg'
@@ -13,6 +14,7 @@ import reports from '../assets/dashboard/reports.svg'
 import files from '../assets/dashboard/File Multiple.svg'
 
 const sidebar = () => {
+     const { logout } = useAuth();
     const sidebar = [
         {
             icon: dashboard,
@@ -48,11 +50,6 @@ const sidebar = () => {
             icon: settings,
             text: "Settings",
             url: "/dashboard/settings"
-        },
-        {
-            icon: logout,
-            text: "Log Out",
-            url: "/logout"
         }
     ]
     return (
@@ -79,6 +76,7 @@ const sidebar = () => {
                         </NavLink>
                     )
                 })}
+                 <button onClick={logout} className="flex rounded-2xl py-3 px-3 font-bold text-[16px] gap-[12px] hover:bg-[#E1C8FF] cursor-pointer"><img src={logouts} alt="" />Log out</button>
             </div>
           </div>
         </div>

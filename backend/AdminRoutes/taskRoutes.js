@@ -8,7 +8,9 @@ router.post('/taskList', async (req, res)=>{
 
     const newTask  =  new taskList({
         avatar: "Asfdsaf",
-        name: "foods",
+        name: "lop",
+        for:"jbdnad@gmail.com",
+        by: "Prince#",
         progress: 100,
         task: [
         {name:"Seo", completed:40},
@@ -17,7 +19,7 @@ router.post('/taskList', async (req, res)=>{
            {name:"Web Page Dev", completed:50},
             {name:"Web Page Dev", completed:50}
         ],
-        Statistics: [{completed:30},{Underprogress:40},{needsRevision:20},{WorkLeft:0}]
+        Statistics: [{completed:30, Underprogress:40, needsRevision:20, WorkLeft:0}]
     })
     await newTask.save();
     return res.status(200).json({message: "created"});

@@ -25,6 +25,9 @@ const Dashboard = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [duration, setDuration] = useState("30");
+    const [Overview, setOverview] = useState([]);
+    const [taskdata, setTaskdata] = useState([]);
+    const [statistics, setStatistics] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,14 +39,23 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const idToken = await auth.currentUser.getIdToken(true);
-        console.log(idToken);
+       
         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/protected-data`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${idToken}`
           }
         });
-        console.log("Data fetched:", data);
+        
+        const allOverview = data.projectData.flatMap(doc => doc.Overview);
+             const allTasks = data.projectData.flatMap(doc => doc.task);
+             const allStatistics = data.projectData.flatMap(doc => doc.Statistics);
+setOverview(allOverview);
+setTaskdata(allTasks);
+setStatistics(allStatistics)
+console.log("Overview:", allOverview);
+        console.log("Tasks:", allTasks);
+        console.log("Statistics:", allStatistics);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
@@ -80,7 +92,7 @@ const Dashboard = () => {
     labels: ["Completed", "Underprogress", "Needs Revision", "Work Left"],
     datasets: [
       {
-        data: [data.completed, data.underProgress, data.needsRevision, data.workLeft],
+         data: [statistics?.[0]?.completed, statistics?.[0]?.Underprogress, statistics?.[0]?.needsRevision, statistics?.[0]?.WorkLeft],
         backgroundColor: ["#200047", "#E6AEEE", "#643A97", "#FFB3B3"],
         borderWidth: 1,
         borderColor: '#fff',
@@ -101,6 +113,13 @@ const Dashboard = () => {
     ]
   }
 
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'short' });
+    const year = String(date.getFullYear()).slice(2);
+    return `Since ${day} ${month} ${year}`;
+  }
   return (
     <Layout>
       <div className='p-6 flex gap-5'>
@@ -140,18 +159,12 @@ const Dashboard = () => {
                   <span className="col-span-1 font-semibold text-black text-[12px]">Your Review</span>
                 </div>
 
-                {[
-                  { task: 'Logo Design', date: '10 Mar 24', status: '50%', review: 'Revision', reviewColor: 'text-red-500' },
-                  { task: 'SEM', date: '10 Mar 24', status: '65%', review: 'N/A', reviewColor: 'text-gray-500' },
-                  { task: 'SEO', date: '10 Mar 24', status: '38%', review: 'Approved', reviewColor: 'text-green-500' },
-                  { task: 'Brand Strategy', date: '10 Mar 24', status: '40%', review: 'Revision', reviewColor: 'text-red-500' },
-                  { task: 'Security Service', date: '10 Mar 24', status: '56%', review: 'Approved', reviewColor: 'text-green-500' },
-                ].map((item, i) => (
+                {taskdata.map((item, i) => (
                   <div key={i} className="grid grid-cols-4 py-[7px] text-sm">
-                    <span className="col-span-1 text-[12px] opacity-[75%] font-semibold">{item.task}</span>
-                    <span className="col-span-1 text-[12px] opacity-[50%] font-semibold">{item.date}</span>
-                    <span className="col-span-1 text-[12px] font-bold font-semibold">{item.status}</span>
-                    <span className={`col-span-1 text-[12px] font-bold font-semibold ${item.reviewColor}`}>{item.review}</span>
+                     <span className="col-span-1 text-[12px] opacity-[75%] font-semibold">{item.name}</span>
+                    <span className="col-span-1 text-[12px] opacity-[50%] font-semibold">{formatDate(item.date)}</span>
+                    <span className="col-span-1 text-[12px] font-bold font-semibold">{item.Status}%</span>
+                    <span className={`col-span-1 text-[12px] font-bold font-semibold ${item.reviewColor}`}>{item.remark}</span>
                   </div>
                 ))}
               </div>
@@ -171,7 +184,7 @@ const Dashboard = () => {
                   <div className='flex flex-col'>
                     <div className=" bg-white pr-5 p-2 rounded-lg">
                       <div className="text-[14px] font-semibold text-black opacity-[79%]">Project Progress</div>
-                      <div className="leading-13 text-[40px] font-extrabold bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] bg-clip-text text-transparent">{data.completed}%</div>
+                      <div className="leading-13 text-[40px] font-extrabold bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] bg-clip-text text-transparent">{statistics?.[0]?.completed}%</div>
                     </div>
                     <div className="mt-4 space-y-1">
                       <div className="flex items-center font-semibold text-[12px]">

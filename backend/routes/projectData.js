@@ -1,28 +1,22 @@
 const admin = require("firebase-admin");
 const express = require("express");
 const router = express.Router();
-
+const authMiddlware = require("../middleware/AuthMiddleware");
+const taskModel = require("../models/taskModel");
 
 
 
 // In your Express route handler
-router.get("/protected-data", async (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).send("Unauthorized");
-  }
-  
-  const idToken = authHeader.split("Bearer ")[1];
+router.get("/protected-data",authMiddlware.AuthMiddleware, async (req, res) => {
 
-  try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    const uid = decodedToken.uid;
-    const email = decodedToken.email;
-    res.json({ message: `Hello, user ${uid}`, email: email });
-  } catch (error) {
-    console.error("Token verification failed:", error);
-    res.status(401).send("Unauthorized");
-  }
+
+
+   
+    const email = req.user.email;
+    
+    const projectData = await taskModel.find({ for: email });
+    res.json({ projectData });
+
 });
 
 

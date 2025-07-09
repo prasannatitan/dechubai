@@ -29,15 +29,19 @@ const taskModel = new Schema({
    Statistics: [{
         completed: {
           type: Number,
+          default: 0
         },
         Underprogress: {
           type: Number,
+          default: 0
         },
         needsRevision: {
           type: Number,
+          default: 0
         },
         WorkLeft: {
-          type: Number
+          type: Number,
+          default: 0
         }
       }],
   task: [
@@ -55,6 +59,8 @@ const taskModel = new Schema({
       },
       remark: {
         type: String,
+        enum: ['Revision', 'Approved', 'N/A'],
+        default: 'N/A'
       }
      
 
@@ -65,10 +71,14 @@ const taskModel = new Schema({
       name: {
         type: String,
       },
-      completed: {
+      status: {
         type: Number,
         default: 0,
-      }
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      },
       
     }
   ]

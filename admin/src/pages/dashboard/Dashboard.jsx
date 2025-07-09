@@ -75,7 +75,7 @@ const dashboard = () => {
                       return (
                         <div key={key} className='flex flex-col'>
                           <p className='capitalize text-[16px] font-semibold'>{itm.name}</p>
-                          <span className='opacity-[63%] text-[12.4px] font-[500] '>{itm.completed}% Completed</span>
+                          <span className='opacity-[63%] text-[12.4px] font-[500] '>{itm.Status}% Completed</span>
                         </div>
                       )
                     })}
