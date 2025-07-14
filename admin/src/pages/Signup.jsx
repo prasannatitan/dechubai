@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import logo from '../assets/dechub logo.png'
 import { Link, useNavigate } from "react-router-dom";
-import stroke from '../assets/home/stroke.svg'
-import axios from 'axios';
 import { toast } from 'react-toastify'
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -80,7 +78,7 @@ try {
                 <h2 className="text-2xl font-bold mb-1 text-gray-800 text-center">
                     Create an Account
                 </h2>
-                <img src={stroke} alt="stroke" className="mb-10 w-70 mx-auto" />
+               
                 <form onSubmit={(e) => {
                     submitHandler(e)
                 }} className="space-y-5">
