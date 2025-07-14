@@ -1,6 +1,24 @@
 const taskList = require('../models/taskModel')
 const express = require('express')
 const router = express.Router();
+const cron = require('node-cron');
+
+cron.schedule('0 0 * * *', async () => {
+  try {
+    await taskList.updateMany({}, {
+  $push: {
+    hours: {
+      $each: [0],
+      $slice: -30
+    }
+  }
+});
+    console.log('Added daily 0 hours');
+  } catch (err) {
+    console.error('Error adding daily 0 hours:', err);
+  }
+});
+
 
 router.get("/get/:projectname", async (req, res) => {
  

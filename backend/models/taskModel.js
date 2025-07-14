@@ -26,7 +26,7 @@ const taskModel = new Schema({
     type: Number,
     required: true
   },
-   Statistics: [{
+  Statistics: [{
         completed: {
           type: Number,
           default: 0
@@ -62,8 +62,6 @@ const taskModel = new Schema({
         enum: ['Revision', 'Approved', 'N/A'],
         default: 'N/A'
       }
-     
-
     }
   ],
   Overview: [
@@ -79,8 +77,10 @@ const taskModel = new Schema({
         type: Date,
         default: Date.now
       },
-      
     }
+  ],
+  hours: [
+       Number
   ]
 })
 

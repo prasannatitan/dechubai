@@ -31,7 +31,7 @@ import presentation from '../../assets/dashboard/Presentation.svg';
 
 const singleprojects = () => {
    const { projectname } = useParams();
-  const [data, setData] = useState(null);
+  const [dataHours, setDataHours] = useState([]);
   const [Overview, setOverview] = useState([]);
   const [taskdata, setTaskdata] = useState([]);
   const [statistics, setStatistics] = useState({});
@@ -51,12 +51,14 @@ const singleprojects = () => {
         const fetchfile = async () => {
             try {
                 const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/project/get/${projectname}`);
+          
+           setDataHours(data?.[0]?.hours)
              const allOverview = data.flatMap(doc => doc.Overview);
              const allTasks = data.flatMap(doc => doc.task);
              const allStatistics = data.flatMap(doc => doc.Statistics);
-setOverview(allOverview);
-setTaskdata(allTasks);
-setStatistics(allStatistics)
+            setOverview(allOverview);
+            setTaskdata(allTasks);
+            setStatistics(allStatistics)
 
 
                
@@ -68,30 +70,6 @@ setStatistics(allStatistics)
 
         fetchfile();
     }, []);
-
-
-  useEffect(() => {
-    // Fake API data
-    const fetchData = async () => {
-      const response = {
-        completed: 63,
-        underProgress: 20,
-        needsRevision: 10,
-        workLeft: 7,
-        CyberSecurity: 40,
-        cyberblank: 60,
-        PerformanceMarketing: 45,
-        Branding: 30
-      };
-      setData(response);
-    };
-
-    fetchData();
-  }, []);
-
-  
-
-  if (!data) return <div>Loading...</div>;
 
   const chartData = {
     labels: ["Completed", "Underprogress", "Needs Revision", "Work Left"],
@@ -106,13 +84,12 @@ setStatistics(allStatistics)
     ],
   };
 
-
    const chartData2 = {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     datasets: [
       {
         label: 'Hours',
-        data: [4, 7.5, 6, 9, 3.5, 3.5, 7],
+        data: dataHours,
         backgroundColor: [
           '#E3B8FF',
           '#9F5FFF',
@@ -161,8 +138,6 @@ function formatDate(dateStr) {
  
   return (
     <Layout>
-   
-
      
       <div className='p-8 flex gap-5'>
         <div className='flex flex-col gap-5 max-w-[850px] w-full'>
@@ -179,7 +154,7 @@ function formatDate(dateStr) {
       spaceBetween={20}
       slidesPerView={4}
        navigation
-      onSlideChange={() => console.log('slide change')}
+   
     >
         {Overview.map((task, idx) => (
           <SwiperSlide
@@ -272,7 +247,7 @@ function formatDate(dateStr) {
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <p className="text-[rgba(0,0,0,0.79)] font-semibold text-[14px]">Work Completed</p>
             <p className="text-[10px] text-[rgba(0,0,0,0.65)]">This week</p>
-            <div className="leading-[normal] text-[40px] font-extrabold bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] bg-clip-text text-transparent">{data.completed}%</div>
+            <div className="leading-[normal] text-[40px] font-extrabold bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] bg-clip-text text-transparent"></div>
                
           </div>
         </div>
@@ -299,7 +274,9 @@ function formatDate(dateStr) {
                   <span className="col-span-1 font-semibold text-black text-[12px]">Status</span>
                   <span className="col-span-1 font-semibold text-black text-[12px]">Your Review</span>
                 </div>
-
+<div className='max-h-[156px] overflow-y-auto [&::-webkit-scrollbar]:w-[2px]
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:bg-gray-500'>
                 {taskdata.map((item, i) => (
                   <div key={i} className="grid grid-cols-4 py-[7px] text-sm">
                     <span className="col-span-1 text-[12px] opacity-[75%] font-semibold">{item.name}</span>
@@ -308,6 +285,7 @@ function formatDate(dateStr) {
                     <span className={`col-span-1 text-[12px] font-bold font-semibold ${item.reviewColor}`}>{item.remark}</span>
                   </div>
                 ))}
+                </div>
               </div>
             </div>
 

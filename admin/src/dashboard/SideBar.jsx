@@ -19,37 +19,37 @@ const sidebar = () => {
         {
             icon: dashboard,
             text: "Dashboard",
-            url: "/dashboard/home"
+            url: "/home"
         },
        {
         icon: files,
         text: "inbox",
-        url: "/dashboard/inbox"
+        url: "/inbox"
        },
         {
             icon: projects,
             text: "Projects",
-            url: "/dashboard/Projects"
+            url: "/Projects"
         },
         {
             icon: performance,
             text: "Analytics",
-            url: "/dashboard/analytics"
+            url: "/analytics"
         },
         {
             icon: reports,
             text: "Reports",
-            url: "/dashboard/reports"
+            url: "/reports"
         },
         {
             icon: support,
             text: "Support",
-            url: "/dashboard/support"
+            url: "/support"
         },
         {
             icon: settings,
             text: "Settings",
-            url: "/dashboard/settings"
+            url: "/settings"
         }
     ]
     return (

@@ -158,7 +158,9 @@ console.log("Overview:", allOverview);
                   <span className="col-span-1 font-semibold text-black text-[12px]">Status</span>
                   <span className="col-span-1 font-semibold text-black text-[12px]">Your Review</span>
                 </div>
-
+<div className='max-h-[156px] overflow-y-auto [&::-webkit-scrollbar]:w-[2px]
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:bg-gray-500'>
                 {taskdata.map((item, i) => (
                   <div key={i} className="grid grid-cols-4 py-[7px] text-sm">
                      <span className="col-span-1 text-[12px] opacity-[75%] font-semibold">{item.name}</span>
@@ -167,6 +169,7 @@ console.log("Overview:", allOverview);
                     <span className={`col-span-1 text-[12px] font-bold font-semibold ${item.reviewColor}`}>{item.remark}</span>
                   </div>
                 ))}
+                </div>
               </div>
             </div>
 
