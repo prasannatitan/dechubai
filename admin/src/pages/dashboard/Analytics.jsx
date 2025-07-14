@@ -4,7 +4,7 @@ import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 import bookicon from '../../assets/dashboard/bookicon.svg'
-
+// text
 const fakeAPIData = {
     lineData: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
