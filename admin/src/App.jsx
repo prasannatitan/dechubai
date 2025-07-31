@@ -1,17 +1,22 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate  } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 
 
-import Signup from './pages/Signup';
+
 import Login from './pages/Login';
 import DashboardRoutes from './dashboard'
 import MainAdmin from './pages/mainAdmin'
+import ProtectedRoute from './pages/protectedRoute';
 import PageNotFound from './pages/PageNotFound'
 
 const LayoutWrapper = () => {
-    
+ 
+   const location = useLocation();
+    if(location.pathname === '/' ){
+      return <Navigate to="/home" />
+    }
  
 
   return (
@@ -20,13 +25,13 @@ const LayoutWrapper = () => {
       <ToastContainer />
       <Routes>
 
-        <Route path="/*" element={<DashboardRoutes />} />
+        <Route path="/*" element={<ProtectedRoute><DashboardRoutes /></ProtectedRoute>} />
         <Route path="/main" element={<MainAdmin/>}/>
          <Route path="*" element={<PageNotFound />} /> 
          
 
-            <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+            <Route path="/auth" element={<Login />} />
+      
       </Routes>
        
     </>

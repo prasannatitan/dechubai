@@ -2,13 +2,14 @@ import Layout from '../../dashboard/Layout';
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import axios from 'axios'
-
+import { auth } from '../../firebase';
 import request from '../../assets/dashboard/request.svg';
 import presentation from '../../assets/dashboard/Presentation.svg';
 
 const dashboard = () => {
   let [datas, setDatas] = useState([])
-
+  const [request, setRequest] = useState([])
+  const [loadingTaskid, setLoadingTaskid] = useState(null)
 
 
   useEffect(() => {
@@ -26,6 +27,50 @@ const dashboard = () => {
     fetchData()
   }, [])
 
+
+  const acceptTask = async (task) => {
+    setLoadingTaskid(task._id)
+    const datas = {
+      projectname: task.projectname,
+      name: task.name,
+      id: task._id
+    }
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/taskreq/accepttask`, datas);
+
+     
+      fetchData()
+      
+    } catch (err) {
+      console.error("Request failed", err);
+    }
+  };
+
+
+
+    async function fetchData() {
+
+      const email = auth.currentUser.email
+
+      try {
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/taskreq/gettask`, { params: { email: email } })
+
+        if (data) {
+          setRequest(data.tasks)
+          setLoadingTaskid(null)
+
+        }
+
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+
+      useEffect(() => {
+    fetchData()
+  }, [])
+
   function formatDate(dateStr) {
     const date = new Date(dateStr);
     const day = date.getDate();
@@ -34,9 +79,9 @@ const dashboard = () => {
     return `Since ${day} ${month} ${year}`;
   }
 
- 
 
-  const requests = [1, 2, 3, 4]; // Dummy repeat for layout
+
+
 
   return (
     <Layout>
@@ -89,22 +134,21 @@ const dashboard = () => {
             <img src={request} alt="" />
             Requests</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {requests.map((_, i) => (
-              <div key={i} className="bg-white p-4 rounded-xl shadow-md flex flex-col justify-between">
+            {request.map((itm, i) => (
+              <div key={itm._id} className="bg-white p-4 rounded-xl shadow-md flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <img src="/path/to/exhibetter-logo.png" className="w-6 h-6" />
-                    <h3 className="font-semibold text-md">Exhibetter</h3>
+                    <h3 className="font-semibold text-md">{itm.name}</h3>
                   </div>
                   <p className="text-sm text-gray-500 mb-3">Service Requested</p>
                   <ul className="space-y-1 text-sm text-gray-800">
-                    <li>Custom Application</li>
-                    <li>E Commerce Service</li>
-                    <li>Digital Experience</li>
+                    <li>{itm.description}</li>
+
                   </ul>
                 </div>
-                <button className="mt-4 bg-black text-white text-sm py-2 rounded-lg hover:bg-gray-800">
-                  Accept Request
+                <button onClick={() => acceptTask(itm)} className={`${loadingTaskid == itm._id ? "opacity-[0.5]" : " opacity-[1]" } mt-4 bg-black text-white text-sm py-2 rounded-lg hover:bg-gray-800`}>
+                 {loadingTaskid == itm._id ? "Submmiting..." : "Accept Request"}
                 </button>
               </div>
             ))}

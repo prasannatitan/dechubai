@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useGSAP } from '@gsap/react';
+import gsap from "gsap";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+
 
 ChartJS.register(ArcElement, Tooltip);
 
 import Layout from '../../dashboard/Layout'
-
+import 'remixicon/fonts/remixicon.css'
 import explore from '../../assets/dashboard/explore.webp'
 import services from '../../assets/dashboard/services.webp'
 import bookicon from '../../assets/dashboard/bookicon.svg'
@@ -15,9 +18,8 @@ import eye from '../../assets/dashboard/eye.svg'
 import chartbar from '../../assets/dashboard/chartbar.svg'
 import penline from '../../assets/dashboard/penline.svg'
 
-import { useAuth } from '../../context/UserContext';
 import axios from 'axios';
-import {auth} from '../../firebase';
+import { auth } from '../../firebase';
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -25,37 +27,82 @@ const Dashboard = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [duration, setDuration] = useState("30");
-    const [Overview, setOverview] = useState([]);
-    const [taskdata, setTaskdata] = useState([]);
-    const [statistics, setStatistics] = useState({});
+  const [Overview, setOverview] = useState([]);
+  const [taskdata, setTaskdata] = useState([]);
+  
+  const [statistics, setStatistics] = useState({});
+  const [taskadd, setTaskadd] = useState(false);
+  const taskaddref = useRef(null);
 
-  const handleSubmit = (e) => {
+
+  const [taskname, setTaskName] = useState("");
+  const [description, setDescription] = useState("");
+  const [formtoggal, setFormtoggal] = useState(false);
+
+
+  const [admin, setadmin] = useState("");
+  const [projectname, setProjectName] = useState("");
+  const handleSubmitmeet = (e) => {
     e.preventDefault();
-   
-    // send data to backend here
+
+
   };
 
- useEffect(() => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const currentDate = new Date().toISOString();
+    const formData = {
+      taskname,
+      description,
+      admin: admin,
+      from: auth.currentUser.email,
+      date: currentDate,
+      projectname: projectname
+    };
+    const {data} = await axios.post(`${import.meta.env.VITE_BASE_URL}/taskreq/newtask`, formData);
+    setFormtoggal(true);
+    setTaskName("");
+    setDescription("");
+  };
+
+  useGSAP(function () {
+    if (!taskaddref.current) return;
+
+    if (taskadd) {
+      gsap.to(taskaddref.current, {
+        opacity: 1,
+        display: "flex",
+        position: "fixed",
+        zIndex: 1000,
+      })
+    } else {
+      gsap.to(taskaddref.current, {
+        opacity: 0,
+        display: "none",
+      })
+    }
+  }, [taskadd])
+
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const idToken = await auth.currentUser.getIdToken(true);
-       
+
         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/protected-data`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${idToken}`
           }
         });
-        
+        setadmin(data.projectData?.[0].by);
+        setProjectName(data.projectData?.[0].name);
         const allOverview = data.projectData.flatMap(doc => doc.Overview);
-             const allTasks = data.projectData.flatMap(doc => doc.task);
-             const allStatistics = data.projectData.flatMap(doc => doc.Statistics);
-setOverview(allOverview);
-setTaskdata(allTasks);
-setStatistics(allStatistics)
-console.log("Overview:", allOverview);
-        console.log("Tasks:", allTasks);
-        console.log("Statistics:", allStatistics);
+        const allTasks = data.projectData.flatMap(doc => doc.task);
+        const allStatistics = data.projectData.flatMap(doc => doc.Statistics);
+        setOverview(allOverview);
+        setTaskdata(allTasks);
+        setStatistics(allStatistics)
       } catch (error) {
         console.log('Error fetching data:', error);
       }
@@ -65,10 +112,7 @@ console.log("Overview:", allOverview);
   }, []);
 
 
-
-
   useEffect(() => {
-    // Fake API data
     const fetchData = async () => {
       const response = {
         completed: 63,
@@ -92,7 +136,7 @@ console.log("Overview:", allOverview);
     labels: ["Completed", "Underprogress", "Needs Revision", "Work Left"],
     datasets: [
       {
-         data: [statistics?.[0]?.completed, statistics?.[0]?.Underprogress, statistics?.[0]?.needsRevision, statistics?.[0]?.WorkLeft],
+        data: [statistics?.[0]?.completed, statistics?.[0]?.Underprogress, statistics?.[0]?.needsRevision, statistics?.[0]?.WorkLeft],
         backgroundColor: ["#200047", "#E6AEEE", "#643A97", "#FFB3B3"],
         borderWidth: 1,
         borderColor: '#fff',
@@ -112,6 +156,7 @@ console.log("Overview:", allOverview);
       }
     ]
   }
+
 
   function formatDate(dateStr) {
     const date = new Date(dateStr);
@@ -149,7 +194,60 @@ console.log("Overview:", allOverview);
                     <img src={bookicon} alt="book" />
                     <h2 className="font-bold  text-[16px]">Task List and Deadlines</h2>
                   </div>
-                  <button className="text-purple-600 text-xl">+</button>
+                  <div className='cursor-pointer bg-gray-300 rounded-full px-2 hover:bg-gray-400 transition-all'>
+                    <button onClick={() => { setTaskadd(true) }} className="cursor-pointer text-purple-600 text-xl">+</button>
+                  </div>
+
+
+
+                  {/* popup panel for add task */}
+
+                  <div className='opacity-0 hidden absolute items-center justify-center top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.5)]' ref={taskaddref}>
+
+                    <div className='rounded-2xl bg-white relative p-8'>
+                      <i onClick={() => {
+                        setTaskadd(false)
+                        setFormtoggal(false)}} 
+                        className="cursor-pointer z-2 absolute top-3 right-3 ri-close-large-line"></i>
+                      {!formtoggal ?
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+                          <div className="flex flex-col">
+
+                            <p className='text-[17px] font-semibold mb-2'>Enter information Related to Your New Task</p>
+
+                            <input
+                              placeholder='Task Name'
+                              type="text"
+                              value={taskname}
+                              onChange={(e) => setTaskName(e.target.value)}
+                              className="w-full text-[14px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              required
+                            />
+                          </div>
+                          <div className="flex flex-col">
+
+                            <textarea
+                              placeholder='Description'
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
+                              className="w-full text-[14px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              rows={4}
+                              required
+                            />
+                          </div>
+                          <button
+                            type="submit"
+                            className="bg-gray-900 hover:bg-black text-white py-2 px-4 rounded "
+                          >
+                            Submit new Task Request
+                          </button>
+                        </form> :
+                        <div>
+                          <p className='text-[50px] text-center'>🎉</p>
+                          <p className='text-4 font-semibold text-center'>You Will see Your Task Status Soon Once <br />Admin Accept your Task Request</p>
+                        </div>}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="text-sm font-medium grid grid-cols-4 text-gray-600 pb-3 pt-1">
@@ -158,17 +256,17 @@ console.log("Overview:", allOverview);
                   <span className="col-span-1 font-semibold text-black text-[12px]">Status</span>
                   <span className="col-span-1 font-semibold text-black text-[12px]">Your Review</span>
                 </div>
-<div className='max-h-[156px] overflow-y-auto [&::-webkit-scrollbar]:w-[2px]
+                <div className='max-h-[156px] overflow-y-auto [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:bg-gray-100
   [&::-webkit-scrollbar-thumb]:bg-gray-500'>
-                {taskdata.map((item, i) => (
-                  <div key={i} className="grid grid-cols-4 py-[7px] text-sm">
-                     <span className="col-span-1 text-[12px] opacity-[75%] font-semibold">{item.name}</span>
-                    <span className="col-span-1 text-[12px] opacity-[50%] font-semibold">{formatDate(item.date)}</span>
-                    <span className="col-span-1 text-[12px] font-bold font-semibold">{item.Status}%</span>
-                    <span className={`col-span-1 text-[12px] font-bold font-semibold ${item.reviewColor}`}>{item.remark}</span>
-                  </div>
-                ))}
+                  {taskdata.map((item, i) => (
+                    <div key={i} className="grid grid-cols-4 py-[7px] text-sm">
+                      <span className="col-span-1 text-[12px] opacity-[75%] font-semibold">{item.name}</span>
+                      <span className="col-span-1 text-[12px] opacity-[50%] font-semibold">{formatDate(item.date)}</span>
+                      <span className="col-span-1 text-[12px] font-bold font-semibold">{item.Status}%</span>
+                      <span className={`col-span-1 text-[12px] font-bold font-semibold ${item.reviewColor}`}>{item.remark}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -271,7 +369,7 @@ console.log("Overview:", allOverview);
         <div className='relative'>
           <div className="sticky top-5 p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
             <h2 className="font-bold  text-[16px]">Book a Meeting</h2>
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <form onSubmit={handleSubmitmeet} className="space-y-4 mt-4">
               <div>
                 <label className="block text-sm font-medium text-gray-600">Title</label>
                 <input
