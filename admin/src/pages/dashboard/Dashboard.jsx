@@ -38,9 +38,9 @@ const dashboard = () => {
     try {
       const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/taskreq/accepttask`, datas);
 
-     
+
       fetchData()
-      
+
     } catch (err) {
       console.error("Request failed", err);
     }
@@ -48,26 +48,26 @@ const dashboard = () => {
 
 
 
-    async function fetchData() {
+  async function fetchData() {
 
-      const email = auth.currentUser.email
+    const email = auth.currentUser.email
 
-      try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/taskreq/gettask`, { params: { email: email } })
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/taskreq/gettask`, { params: { email: email } })
 
-        if (data) {
-          setRequest(data.tasks)
-          setLoadingTaskid(null)
+      if (data) {
+        setRequest(data.tasks)
+        setLoadingTaskid(null)
 
-        }
-
-      } catch (err) {
-        console.error(err)
       }
+
+    } catch (err) {
+      console.error(err)
     }
+  }
 
 
-      useEffect(() => {
+  useEffect(() => {
     fetchData()
   }, [])
 
@@ -82,14 +82,18 @@ const dashboard = () => {
 
 
 
+ 
 
   return (
     <Layout>
       <div className="p-6 ">
-        {/* Overview Section */}
+
+
+        {datas.length > 0 ? (
+          <>
         <div>
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <img src={presentation} alt="" /> Overview</h2>
+            <img src={presentation} alt="" /> Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             {datas.map((itm, i) => (
@@ -127,33 +131,34 @@ const dashboard = () => {
             ))}
           </div>
         </div>
+        {request.length > 0 ?(
+          <div className="mt-10">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <img src={request} alt="" />
+              Requests</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {request.map((itm, i) => (
+                <div key={itm._id} className="bg-white p-4 rounded-xl shadow-md flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <img src="/path/to/exhibetter-logo.png" className="w-6 h-6" />
 
-        {/* Requests Section */}
-        <div className="mt-10">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <img src={request} alt="" />
-            Requests</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {request.map((itm, i) => (
-              <div key={itm._id} className="bg-white p-4 rounded-xl shadow-md flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <img src="/path/to/exhibetter-logo.png" className="w-6 h-6" />
-                    <h3 className="font-semibold text-md">{itm.name}</h3>
+                      <h3 className="font-semibold text-md">{itm.name}</h3>
+                    </div>
+                    <h3 className="font-medium text-md">Project name: {itm.projectname}</h3>
+                    <p className="text-sm text-gray-500 mb-3">Description</p>
+                    <ul className="space-y-1 text-sm text-gray-800">
+                      <li>{itm.description}</li>
+
+                    </ul>
                   </div>
-                  <p className="text-sm text-gray-500 mb-3">Service Requested</p>
-                  <ul className="space-y-1 text-sm text-gray-800">
-                    <li>{itm.description}</li>
-
-                  </ul>
+                  <button onClick={() => acceptTask(itm)} className={`${loadingTaskid == itm._id ? "opacity-[0.5]" : " opacity-[1]"} mt-4 bg-black text-white text-sm py-2 rounded-lg hover:bg-gray-800`}>
+                    {loadingTaskid == itm._id ? "Submmiting..." : "Accept Request"}
+                  </button>
                 </div>
-                <button onClick={() => acceptTask(itm)} className={`${loadingTaskid == itm._id ? "opacity-[0.5]" : " opacity-[1]" } mt-4 bg-black text-white text-sm py-2 rounded-lg hover:bg-gray-800`}>
-                 {loadingTaskid == itm._id ? "Submmiting..." : "Accept Request"}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+          </div> ): ("")} </>): (<div className='flex w-full h-100 justify-center items-center'><p className='text-[20px]'>No Data To Show Here</p></div>)}
       </div>
     </Layout>
   );
