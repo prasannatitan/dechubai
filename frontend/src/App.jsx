@@ -13,7 +13,7 @@ import Test from './pages/test';
 import Header from './component/header';
 import Footer from './component/footer';
 import ProtectedRoute from './pages/protectedRoute';
-import PrivacyPolicy from './pages/privacyPolicy'
+import PrivacyPolicy from './pages/privacypolicy'
 import TermsOfService from './pages/TermsOfService'
 
 import DashboardRoutes from './dashboard'
