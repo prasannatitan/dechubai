@@ -13,7 +13,8 @@ import Test from './pages/test';
 import Header from './component/header';
 import Footer from './component/footer';
 import ProtectedRoute from './pages/protectedRoute';
-
+import PrivacyPolicy from './pages/privacyPolicy'
+import TermsOfService from './pages/TermsOfService'
 
 import DashboardRoutes from './dashboard'
 
@@ -37,7 +38,8 @@ const LayoutWrapper = () => {
 
 
         <Route path="/dashboard/*" element={<ProtectedRoute><DashboardRoutes /></ProtectedRoute>} />
-       
+        <Route path='/privacy-policy' element={<PrivacyPolicy/>}/>
+        <Route path='/termofservice' element={<TermsOfService/>}/>
         <Route path="strategic-planning" element={<Strategic />} />
         <Route path="digital-experience" element={<DigitalExperience />} />
         <Route path="performance-marketing" element={<PerformanceMarketing />} />
