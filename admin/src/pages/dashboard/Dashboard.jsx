@@ -97,7 +97,7 @@ const dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             {datas.map((itm, i) => (
-              <Link key={i} to={`/project/${encodeURIComponent(itm.name)}`}>
+              <Link key={i} to={`${encodeURIComponent(itm.name)}`}>
                 <div className="bg-white p-4 rounded-xl shadow-md">
 
                   <div className="text-[12.4px] font-[600] text-gray-500">{formatDate(itm.date)}</div>

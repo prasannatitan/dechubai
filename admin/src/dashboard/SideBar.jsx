@@ -19,12 +19,12 @@ const sidebar = () => {
         {
             icon: dashboard,
             text: "Dashboard",
-            url: "/home"
+            url: "/app/projects"
         },
        {
         icon: files,
         text: "inbox",
-        url: "/inbox"
+        url: "/app/inbox"
        },
         {
             icon: projects,

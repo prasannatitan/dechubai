@@ -20,7 +20,8 @@ const taskModel = new Schema({
   },
   name: {
     type: String,
-    required: true
+    required: true,
+    uniqe: true
   },
   progress: {
     type: Number,

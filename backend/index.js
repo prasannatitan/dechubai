@@ -7,6 +7,7 @@ const fileFolderRoutes = require('./routes/filefolder');
 const taskPageRoutes = require('./AdminRoutes/taskPageRoutes')
 const projectData = require('./routes/projectData');
 const taskRequest = require('./routes/taskrequest');
+const { router: superAdminAuth, authenticateToken } = require('./routes/superAdminAuth');
 const cors = require('cors');
 const app = express();
 const gsheet = require('./routes/gSheet');
@@ -31,6 +32,15 @@ app.use('/task', taskRoutes);
 app.use('/taskreq', taskRequest);
 app.use('/project', taskPageRoutes);
 app.use('/api', projectData)
+
+// Super Admin Authentication Routes
+app.use('/super-admin', superAdminAuth);
+
+// Protected Super Admin Routes (example)
+app.use('/super-admin/projects', authenticateToken, (req, res, next) => {
+    // This middleware will protect all /super-admin/projects routes
+    next();
+});
 
 mongoose.connect(mongoDBUrl)
     .then(() => {

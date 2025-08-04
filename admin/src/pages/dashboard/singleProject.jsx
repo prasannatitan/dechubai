@@ -83,7 +83,7 @@ const singleprojects = () => {
       },
     ],
   };
-
+console.log(dataHours)
   const chartData2 = {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     datasets: [

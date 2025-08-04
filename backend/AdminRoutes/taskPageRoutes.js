@@ -36,6 +36,16 @@ router.get("/get/:projectname", async (req, res) => {
 
 })
 
+router.get('/getById/:id', async (req, res) => {
+  try {
+    const data = await taskList.findById(req.params.id);
+    if (!data) return res.status(404).json({ error: 'Project not found' });
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 router.put('/update/:id', async (req, res) => {
   
   try {

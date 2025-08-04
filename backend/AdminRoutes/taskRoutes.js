@@ -4,28 +4,28 @@ const router = express.Router();
 
 
 router.post('/taskList', async (req, res)=>{
-    const data = req.body;
+    try {
+        const data = req.body;
 
-    const newTask  =  new taskList({
-        avatar: "Asfdsaf",
-        name: "lop",
-        for:"busaprince13@gmail.com",
-        by: "busaprince13@gmail.com",
-        progress: 100,
-        task: [
-        {name:"Seo", completed:40},
-         {name:"Web Page Dev", completed:50},
-          {name:"Web Page Dev", completed:50},
-           {name:"Web Page Dev", completed:50},
-            {name:"Web Page Dev", completed:50}
-        ],
-        Statistics: [{completed:30, Underprogress:40, needsRevision:20, WorkLeft:0}],
-        hours: [1,2,3,4,5]
-
-    })
-    await newTask.save();
-    return res.status(200).json({message: "created"});
-
+        const newTask = new taskList({
+            avatar: data.avatar,
+            name: data.name,
+            for: data.for,
+            by: data.by,
+            progress: data.progress,
+            date: data.date,
+            task: data.task || [],
+            Statistics: data.Statistics || [{completed: 0, Underprogress: 0, needsRevision: 0, WorkLeft: 0}],
+            Overview: data.Overview || [],
+            hours: data.hours || []
+        })
+        
+        await newTask.save();
+        return res.status(200).json({message: "created", project: newTask});
+    } catch (error) {
+        console.error('Error creating project:', error);
+        return res.status(500).json({error: "Error creating project"});
+    }
 })
 
 router.get('/taskList', async (req, res)=>{
