@@ -35,8 +35,8 @@ export default function SuperAdminLogin() {
                 <div className="bg-white rounded-2xl shadow-xl p-8">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-white font-bold text-2xl">S</span>
+                        <div className="w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <span className="text-white font-bold text-2xl"><img src="https://admin.dechub.ai/assets/dechub%20logo-DNq1oBvg.png" alt="logo" /></span>
                         </div>
                         <h1 className="text-2xl font-bold text-gray-900 mb-2">Super Admin Login</h1>
                         <p className="text-gray-600">Access the admin dashboard</p>
