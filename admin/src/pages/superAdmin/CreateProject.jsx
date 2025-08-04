@@ -63,7 +63,7 @@ export default function CreateProject() {
                     <div className="mb-8">
                         <div className="flex items-center gap-4 mb-4">
                             <button
-                                onClick={() => navigate('/super-admin/projects')}
+                                onClick={() => navigate('/admin/projects')}
                                 className="p-2 text-gray-600 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                             >
                                 <ArrowLeft className="w-5 h-5" />
@@ -167,7 +167,7 @@ export default function CreateProject() {
                                 </button>
                                 <button 
                                     type="button"
-                                    onClick={() => navigate('/super-admin/projects')}
+                                    onClick={() => navigate('/admin/projects')}
                                     className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
                                 >
                                     <X className="w-5 h-5" />
