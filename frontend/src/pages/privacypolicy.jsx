@@ -15,7 +15,8 @@ const PrivacyPolicy = () => {
       <p className="mb-6">
         Welcome to <strong>Dechub.ai</strong> (“we,” “our,” or “us”). Your privacy is important to us.
         This Privacy Policy explains how we collect, use, and protect your personal information when
-        you use our platform at <a href="https://dechub.ai" className="text-blue-600 underline">https://dechub.ai</a>.
+        you use our platform at <a href="https://dechub.ai" className="text-blue-600 underline">https://dechub.ai</a>.<br/>
+        Our Home Page is <a href="https://dechub.ai" className="text-blue-600 underline">https://dechub.ai</a>
       </p>
 
       <h2 className="text-xl font-semibold text-purple-700 mt-6 mb-2">1. Information We Collect</h2>

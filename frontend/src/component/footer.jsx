@@ -91,6 +91,8 @@ const Footer = () => {
                                     <li className="text-white">Contact Us</li>
                                     <li className="text-white">Products</li>
                                     <li className="text-white">For Industries</li>
+                                    <li className="text-white"><a href="https://www.dechub.ai/privacy-policy">Privacy Policy</a></li>
+                                    <li className="text-white"><a href="https://www.dechub.ai/termofservice">Terms & Conditions</a></li>
                                 </ul>
                             </div>
                         </div>
