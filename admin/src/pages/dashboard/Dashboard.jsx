@@ -5,6 +5,7 @@ import axios from 'axios'
 import { auth } from '../../firebase';
 import request from '../../assets/dashboard/request.svg';
 import presentation from '../../assets/dashboard/Presentation.svg';
+import { Plus, Edit } from 'lucide-react'
 
 const dashboard = () => {
   let [datas, setDatas] = useState([])
@@ -92,8 +93,17 @@ const dashboard = () => {
         {datas.length > 0 ? (
           <>
         <div>
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <div className='flex justify-between items-center mb-4'>
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <img src={presentation} alt="" /> Projects</h2>
+            <Link
+            to="/app/new"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 shadow-lg hover:shadow-xl"
+          >
+            <Plus className="w-4 h-4" />
+            Create Project
+          </Link>
+        </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             {datas.map((itm, i) => (
@@ -101,8 +111,14 @@ const dashboard = () => {
                 <div className="bg-white p-4 rounded-xl shadow-md">
 
                   <div className="text-[12.4px] font-[600] text-gray-500">{formatDate(itm.date)}</div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <img src="h" alt={itm.name} className="w-5 h-5" />
+                  <div className="flex items-center gap-2 my-2">
+                    {!itm.avatar ? 
+                   
+                    <div className='h-[35px] w-[35px] bg-gradient-to-br from-blue-500 to-purple-600 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center'>
+<p className='text-white'>{itm.name.charAt(0).toUpperCase()}</p>
+                    </div>:
+                    
+                     <img src={itm.avatar} alt="project logo" className="shadow rounded-md w-10 h-10" />}
                     <h3 className="text-lg font-semibold">{itm.name}</h3>
                   </div>
                   <div>

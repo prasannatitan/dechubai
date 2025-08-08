@@ -25,6 +25,7 @@ import Sidebar from '../../component/Sidebar'
 export default function ProjectEdit() {
     const { id } = useParams()
     const navigate = useNavigate()
+    const [staerror, setStaerror] = useState(false)
     const [selectedTask, setSelectedTask] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -57,13 +58,14 @@ export default function ProjectEdit() {
     }
 
     function handleNestedChange(path, index, field, value) {
+        setStaerror(false)
         const updated = [...selectedTask[path]]
         updated[index][field] = value
         setSelectedTask({ ...selectedTask, [path]: updated })
     }
 
     function handleAddTask() {
-        const newTask = { name: '', Status: 0, remark: '', date: new Date() }
+        const newTask = { name: '', Status: 0, remark: 'N/A', date: new Date() }
         const updated = [...selectedTask.task, newTask]
         setSelectedTask({ ...selectedTask, task: updated })
     }
@@ -100,16 +102,62 @@ export default function ProjectEdit() {
         return selectedTask.hours && selectedTask.hours[today] !== undefined ? selectedTask.hours[today] : 0
     }
 
-    function handleAddTodayHours() {
-        const todayHours = document.getElementById('todayHours').value
-        if (todayHours && todayHours > 0) {
-            const updated = [...selectedTask.hours, Number(todayHours)]
-            setSelectedTask({ ...selectedTask, hours: updated })
-            document.getElementById('todayHours').value = ''
-        }
+//    function handleAddTodayHours() {
+//     const todayHours = document.getElementById('todayHours').value
+//     if (todayHours && todayHours > 0) {
+//         const dayName = new Date().toLocaleDateString('en-US', { weekday: 'short' }) // e.g. 'Thu'
+
+//         const updated = [
+//             ...selectedTask.hours.slice(0, -1), // remove the last day's 0
+//             { day: dayName, hours: Number(todayHours) } // overwrite with actual hours
+//         ]
+
+//         setSelectedTask({ ...selectedTask, hours: updated })
+//         document.getElementById('todayHours').value = ''
+//     }
+// }
+
+ const [inputValue, setInputValue] = useState('')
+   const [warning, setWarning] = useState('')
+
+   const handleAddTodayHours = () => {
+    const value = Number(inputValue)
+    if (!value || value <= 0) return
+
+    const today = new Date().toLocaleDateString('en-US', { weekday: 'short' })
+
+    // Check if today's entry already exists
+    const alreadyAdded = selectedTask.hours.some(h => h.day === today)
+
+    if (alreadyAdded) {
+      setWarning(`Hours for today (${today}) already added.`)
+      return
     }
 
+    const newEntry = { day: today, hours: value }
+
+    const updatedHours = [...selectedTask.hours, newEntry]
+    const trimmed = updatedHours.slice(-30)
+
+    setSelectedTask({ ...selectedTask, hours: trimmed })
+    setInputValue('')
+    setWarning('')
+  }
+
+
     async function handleSave() {
+         const total = 
+    Number(selectedTask?.Statistics[0].completed) + 
+    Number(selectedTask?.Statistics[0].needsRevision) + 
+    Number(selectedTask?.Statistics[0].Underprogress) + 
+    Number(selectedTask?.Statistics[0].WorkLeft);
+
+  if (total > 100) {
+    setStaerror(true);
+   
+    return;
+  }
+
         try {
             const token = localStorage.getItem('superAdminToken')
             await axios.put(`${import.meta.env.VITE_BASE_URL}/project/update/${selectedTask._id}`, selectedTask, {
@@ -262,6 +310,7 @@ export default function ProjectEdit() {
                                     <BarChart3 className="w-5 h-5" />
                                     Statistics
                                 </h3>
+                                {staerror ? <p className='text-red-500'>Total % cannot be grater then 100% of this four value</p> : ""}
                                 {selectedTask.Statistics.map((stat, i) => (
                                     <div key={i} className="space-y-3">
                                         {Object.keys(stat).slice(0, 4).map((key) => (
@@ -290,7 +339,7 @@ export default function ProjectEdit() {
                                 <div className="mb-4">
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Previous Hours</label>
                                     <div className="max-h-32 overflow-y-auto bg-white p-3 rounded border">
-                                        {selectedTask.hours && selectedTask.hours.length > 0 ? (
+                                        {/* {selectedTask.hours && selectedTask.hours.length > 0 ? (
                                             selectedTask.hours.map((hour, i) => {
                                                 const hourDate = new Date(selectedTask.date)
                                                 hourDate.setDate(hourDate.getDate() + i)
@@ -309,18 +358,21 @@ export default function ProjectEdit() {
                                             })
                                         ) : (
                                             <div className="text-sm text-gray-500">No hours recorded yet</div>
-                                        )}
+                                        )} */}
                                     </div>
                                 </div>
 
                                 {/* Add Today's Hours */}
                                 <div className="flex gap-3">
                                     <div className="flex-1">
+                                         {warning && <p className="text-red-500 text-sm">{warning}</p>}
                                         <label className="block text-sm font-medium text-gray-700 mb-2">
                                             {`Today's Hours (${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})`}
                                         </label>
                                         <input
                                             id="todayHours"
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
                                             type="number"
                                             min="0"
                                             max="24"

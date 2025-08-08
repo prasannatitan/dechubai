@@ -12,10 +12,10 @@ const layout = ({ children }) => {
         <div className="flex w-full bg-cover bg-no-repeat bg-center"  style={{ backgroundImage: `url(${dashbg})` }}>
             <Sidebar />
             <div className='w-full'>
-                <div className='p-5'>
-                    <p className='text-[rgba(32,0,71,1)] font-bold text-[30px]'>{`Hey, ${name || ''}!!`}</p>
+               <div className='max-w-[1300px] mx-auto'>
+                 <div className='p-5'>
+                    <p className='text-[rgba(32,0,71,1)] font-bold text-[30px]'>{`Hey Admin, ${name || ''}!!`}</p>
                 </div>
-               <div className='max-w-[1300px]'>
                  {children}
                </div>
             </div>

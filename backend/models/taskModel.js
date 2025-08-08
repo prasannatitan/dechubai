@@ -16,7 +16,8 @@ const taskModel = new Schema({
   },
   avatar: {
     type: String,
-    required: true
+    required: false,
+    default: ""
   },
   name: {
     type: String,
@@ -28,23 +29,23 @@ const taskModel = new Schema({
     required: true
   },
   Statistics: [{
-        completed: {
-          type: Number,
-          default: 0
-        },
-        Underprogress: {
-          type: Number,
-          default: 0
-        },
-        needsRevision: {
-          type: Number,
-          default: 0
-        },
-        WorkLeft: {
-          type: Number,
-          default: 0
-        }
-      }],
+    completed: {
+      type: Number,
+      default: 0
+    },
+    Underprogress: {
+      type: Number,
+      default: 0
+    },
+    needsRevision: {
+      type: Number,
+      default: 0
+    },
+    WorkLeft: {
+      type: Number,
+      default: 0
+    }
+  }],
   task: [
     {
       name: {
@@ -81,7 +82,14 @@ const taskModel = new Schema({
     }
   ],
   hours: [
-       Number
+    {
+      date: {
+        type: Date,
+        default: Date.now
+      },
+      day: { type: String },
+      hours: { type: Number, default: 0 }
+    }
   ]
 })
 

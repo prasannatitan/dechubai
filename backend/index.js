@@ -1,4 +1,5 @@
 const express = require('express');
+const taskList = require('./models/taskModel');
 const mongoose = require('mongoose');
 const { port, mongoDBUrl } = require('./config/config');
 const imageRoutes = require('./routes/imageRoutes');
@@ -12,16 +13,16 @@ const cors = require('cors');
 const app = express();
 const gsheet = require('./routes/gSheet');
 
-// const allowedOrigins = [
-//   "https://www.dechub.ai",
-//   "https://admin.dechub.ai"
-// ];
+const allowedOrigins = [
+  "https://www.dechub.ai",
+  "https://admin.dechub.ai"
+];
 
-// app.use(cors({
-//   origin: allowedOrigins, 
-//   credentials: true 
-// }));
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins, 
+  credentials: true 
+}));
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -52,3 +53,5 @@ mongoose.connect(mongoDBUrl)
     .catch((err) => {
         console.log(err);
     });
+
+

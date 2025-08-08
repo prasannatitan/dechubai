@@ -165,6 +165,8 @@ const Dashboard = () => {
     const year = String(date.getFullYear()).slice(2);
     return `Since ${day} ${month} ${year}`;
   }
+
+  console.log(statistics)
   return (
     <Layout>
       <div className='p-6 flex gap-5'>
@@ -187,7 +189,7 @@ const Dashboard = () => {
 
           <div className='grid grid-cols-4 gap-5'>
             <div className='col-span-2'>
-              <div className="bg-[rgba(255,255,255,0.74)] h-full text-gray-800 p-6 rounded-2xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] w-full max-w-md mx-auto">
+              <div className="relative overflow-hidden bg-[rgba(255,255,255,0.74)] h-full text-gray-800 p-6 rounded-2xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] w-full max-w-md mx-auto">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2">
 
@@ -268,11 +270,17 @@ const Dashboard = () => {
                     </div>
                   ))}
                 </div>
+
+                  {taskdata.length === 0 ?
+                <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
+                  <p className="text-gray-500 text-xl font-medium">No enough data available</p>
+                </div>
+                : ""}
               </div>
             </div>
 
             <div className='col-span-2'>
-              <div className=" p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
+              <div className="relative overflow-hidden p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
                 <div className="flex items-center gap-2">
 
                   <img src={chart} alt="book" />
@@ -303,6 +311,12 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
+
+                 {statistics?.[0]?.completed === 0 & statistics?.[0]?.Underprogress === 0 & statistics?.[0]?.needsRevision === 0 & statistics?.[0]?.WorkLeft === 0 ?
+                <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
+                  <p className="text-gray-500 text-xl font-medium">No enough data available</p>
+                </div>
+                : ""}
               </div>
             </div>
           </div>

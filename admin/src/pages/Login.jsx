@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 const Login = () => {
     const { user } = useAuth();
     if (user) {
-        return <Navigate to="/home" replace />
+        return <Navigate to="/app" replace />
     }
     const navigate = useNavigate()
     const handleGoogleLogin = async () => {
@@ -20,7 +20,7 @@ const Login = () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             toast.success("Login Successful!");
-            navigate('/');
+            navigate('/app');
         } catch (err) {
             alert(err.message);
         }

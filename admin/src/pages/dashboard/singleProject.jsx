@@ -17,6 +17,7 @@ import 'swiper/css/scrollbar';
 ChartJS.register(ArcElement, Tooltip);
 import { useAuth } from '../../context/UserContext';
 import Layout from '../../dashboard/Layout'
+import HoursChart from '../../component/hourChart';
 
 import daily from '../../assets/dashboard/daily.svg'
 
@@ -41,6 +42,7 @@ const singleprojects = () => {
   const [duration, setDuration] = useState("30");
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -52,7 +54,7 @@ const singleprojects = () => {
       try {
         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/project/get/${projectname}`);
 
-        setDataHours(data?.[0]?.hours)
+        setDataHours(data?.[0]?.hours);
         const allOverview = data.flatMap(doc => doc.Overview);
         const allTasks = data.flatMap(doc => doc.task);
         const allStatistics = data.flatMap(doc => doc.Statistics);
@@ -83,50 +85,6 @@ const singleprojects = () => {
       },
     ],
   };
-console.log(dataHours)
-  const chartData2 = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    datasets: [
-      {
-        label: 'Hours',
-        data: dataHours,
-        backgroundColor: [
-          '#E3B8FF',
-          '#9F5FFF',
-          '#DAA3FF',
-          '#6D38BE',
-          '#FFAFAF',
-          '#FFAFAF',
-          '#8635D0',
-        ],
-        borderRadius: 12,
-        barThickness: 30,
-      },
-    ],
-  }
-
-  const chartOptions = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 10,
-        ticks: {
-          callback: (value) => `${value}hr`,
-        },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.1)',
-        },
-      },
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-    },
-    plugins: {
-      legend: { display: false },
-    },
-  }
 
   function formatDate(dateStr) {
     const date = new Date(dateStr);
@@ -135,89 +93,89 @@ console.log(dataHours)
     const year = String(date.getFullYear()).slice(2);
     return `Since ${day} ${month} ${year}`;
   }
-
+console.log(dataHours)
   return (
     <Layout>
 
       <div className='p-8 flex gap-5'>
         <div className='flex flex-col gap-5 max-w-[850px] w-full'>
-         
 
-         {Overview.length > 0 ?
-          <div className='relative'>
-            <div className="rounded-2xl w-full max-w-6xl mx-auto">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold flex items-center gap-2"><img src={presentation} alt="" /> Overview</h2>
 
+          {Overview.length > 0 ?
+            <div className='relative'>
+              <div className="rounded-2xl w-full max-w-6xl mx-auto">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-semibold flex items-center gap-2"><img src={presentation} alt="" /> Overview</h2>
+
+                </div>
+
+                <div className="flex gap-4 overflow-x-auto">
+                  <Swiper className='flex justify-start mr-0 jkkk'
+                    modules={[Navigation, Pagination, Scrollbar]}
+                    spaceBetween={20}
+                    slidesPerView={4}
+                    navigation
+
+                  >
+                    {Overview.map((task, idx) => (
+                      <SwiperSlide
+                        key={idx}
+                        className="bg-[rgba(255,255,255,0.74)] rounded-2xl p-4 shadow-sm min-w-[272px] "
+                      >
+                        <div className="flex justify-between items-start text-sm text-gray-500">
+                          <span>{formatDate(task.date)}</span>
+                          <button className="text-xl text-purple-300 hover:text-purple-600">+</button>
+                        </div>
+
+                        <h3 className="mt-2 text-lg font-semibold text-purple-900">{task.name}</h3>
+
+                        <div className="mt-2 pb-2 border-b border-gray-300 ">
+
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div
+                              className={`bg-[#FFB3B3] h-2 rounded-full`}
+                              style={{ width: `${task.status}%` }}
+                            />
+                          </div>
+                          <div className='flex items-center justify-between'>
+                            <p className="text-sm text-gray-500 mb-1">Progress</p>
+                            <div className="text-right text-sm mt-1 text-gray-700">{task.status}%</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between mt-2">
+                          <div className="flex -space-x-2">
+                            <img
+                              className="w-7 h-7 rounded-full border-2 border-white"
+                              src="https://i.pravatar.cc/100?img=1"
+                              alt="user"
+                            />
+                            <img
+                              className="w-7 h-7 rounded-full border-2 border-white"
+                              src="https://i.pravatar.cc/100?img=2"
+                              alt="user"
+                            />
+                            <img
+                              className="w-7 h-7 rounded-full border-2 border-white"
+                              src="https://i.pravatar.cc/100?img=3"
+                              alt="user"
+                            />
+                          </div>
+
+
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
               </div>
 
-              <div className="flex gap-4 overflow-x-auto">
-                <Swiper className='flex justify-start mr-0 jkkk'
-                  modules={[Navigation, Pagination, Scrollbar]}
-                  spaceBetween={20}
-                  slidesPerView={4}
-                  navigation
-
-                >
-                  {Overview.map((task, idx) => (
-                    <SwiperSlide
-                      key={idx}
-                      className="bg-[rgba(255,255,255,0.74)] rounded-2xl p-4 shadow-sm min-w-[272px] "
-                    >
-                      <div className="flex justify-between items-start text-sm text-gray-500">
-                        <span>{formatDate(task.date)}</span>
-                        <button className="text-xl text-purple-300 hover:text-purple-600">+</button>
-                      </div>
-
-                      <h3 className="mt-2 text-lg font-semibold text-purple-900">{task.name}</h3>
-
-                      <div className="mt-2 pb-2 border-b border-gray-300 ">
-
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div
-                            className={`bg-[#FFB3B3] h-2 rounded-full`}
-                            style={{ width: `${task.status}%` }}
-                          />
-                        </div>
-                        <div className='flex items-center justify-between'>
-                          <p className="text-sm text-gray-500 mb-1">Progress</p>
-                          <div className="text-right text-sm mt-1 text-gray-700">{task.status}%</div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between mt-2">
-                        <div className="flex -space-x-2">
-                          <img
-                            className="w-7 h-7 rounded-full border-2 border-white"
-                            src="https://i.pravatar.cc/100?img=1"
-                            alt="user"
-                          />
-                          <img
-                            className="w-7 h-7 rounded-full border-2 border-white"
-                            src="https://i.pravatar.cc/100?img=2"
-                            alt="user"
-                          />
-                          <img
-                            className="w-7 h-7 rounded-full border-2 border-white"
-                            src="https://i.pravatar.cc/100?img=3"
-                            alt="user"
-                          />
-                        </div>
-
-
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
             </div>
-
-          </div>
-          :
-          ""}
+            :
+            ""}
 
 
-          <div>
+          {/* <div>
             <div className="p-6 bg-[rgba(255,255,255,0.74)] rounded-2xl shadow-md w-full max-w-5xl mx-auto">
               <div className="flex justify-between items-start">
                 <div>
@@ -258,12 +216,14 @@ console.log(dataHours)
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+
+          <HoursChart hoursData={dataHours}/>
 
 
           <div className='grid grid-cols-4 gap-5'>
-            <div className='col-span-2'>
-              <div className="bg-[rgba(255,255,255,0.74)] h-full text-gray-800 p-6 rounded-2xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] w-full max-w-md mx-auto">
+            <div className='col-span-2 '>
+              <div className="relative overflow-hidden bg-[rgba(255,255,255,0.74)] h-full text-gray-800 p-6 rounded-2xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] w-full max-w-md mx-auto">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2">
 
@@ -291,11 +251,21 @@ console.log(dataHours)
                     </div>
                   ))}
                 </div>
+
+                 {taskdata.length === 0 ?
+                <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
+                  <p className="text-gray-500 text-xl font-medium">No enough data available</p>
+                </div>
+                : ""}
+
+
               </div>
+
+             
             </div>
 
             <div className='col-span-2'>
-              <div className=" p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
+              <div className="relative overflow-hidden p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
                 <div className="flex items-center gap-2">
 
                   <img src={chart} alt="book" />
@@ -326,6 +296,12 @@ console.log(dataHours)
                     </div>
                   </div>
                 </div>
+
+                 {statistics?.[0]?.completed === 0 & statistics?.[0]?.Underprogress === 0 & statistics?.[0]?.needsRevision === 0 & statistics?.[0]?.WorkLeft === 0 ?
+                <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
+                  <p className="text-gray-500 text-xl font-medium">No enough data available</p>
+                </div>
+                : ""}
               </div>
             </div>
           </div>

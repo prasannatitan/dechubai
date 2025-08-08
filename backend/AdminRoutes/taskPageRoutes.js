@@ -5,15 +5,18 @@ const cron = require('node-cron');
 
 cron.schedule('0 0 * * *', async () => {
   try {
+    const dayName = moment().format('ddd'); // 'Mon', 'Tue', etc.
+
     await taskList.updateMany({}, {
-  $push: {
-    hours: {
-      $each: [0],
-      $slice: -30
-    }
-  }
-});
-    console.log('Added daily 0 hours');
+      $push: {
+        hours: {
+          $each: [{ day: dayName, hours: 0 }],
+          $slice: -30
+        }
+      }
+    });
+
+    console.log(`Added 0 hours for ${dayName}`);
   } catch (err) {
     console.error('Error adding daily 0 hours:', err);
   }
@@ -29,7 +32,7 @@ router.get("/get/:projectname", async (req, res) => {
     }else{
    
         const data = await taskList.find({ name: projectname });
-       console.log(data)
+      
         return res.json(data);
     
 }
