@@ -127,7 +127,7 @@ const CreateProject = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Avatar URL *</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Company Logo (optional)</label>
                                 <input
                                     type="file"
                                     name='avatar'
@@ -146,19 +146,7 @@ const CreateProject = () => {
                                     placeholder="Enter assignee email"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Progress (%) *</label>
-                                <input
-                                    name="progress"
-                                    type="number"
-                                    min="0"
-                                    max="100"
-                                    value={newProject.progress}
-                                    onChange={handleNewProjectChange}
-                                    required
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                                />
-                            </div>
+                           
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Start Date *</label>
                                 <input

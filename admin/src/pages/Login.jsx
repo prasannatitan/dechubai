@@ -20,7 +20,7 @@ const Login = () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             toast.success("Login Successful!");
-            navigate('/app');
+            navigate('/');
         } catch (err) {
             alert(err.message);
         }
