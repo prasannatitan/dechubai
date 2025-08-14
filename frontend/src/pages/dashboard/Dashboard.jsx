@@ -94,12 +94,7 @@ const Dashboard = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${idToken}`
           }
-        });
-      console.log(data);
-       if (!data || data.toLowerCase() === "no data available") {
-          console.error("No project data found");
-          return <div>No project data available</div>;
-        }
+        }); 
         setadmin(data.projectData?.[0].by);
         setProjectName(data.projectData?.[0].name);
         const allOverview = data.projectData.flatMap(doc => doc.Overview);
@@ -171,8 +166,7 @@ const Dashboard = () => {
     return `Since ${day} ${month} ${year}`;
   }
 
-  console.log(statistics)
-  return (
+return (
     <Layout>
       <div className='p-6 flex gap-5'>
         <div className='flex flex-col gap-5 max-w-[850px] w-full'>
