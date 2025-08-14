@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const TaskRequest = require("../models/taskRequest");
-const TaskList = require("../models/taskModel");
+const TaskList = require("../models/ProjectModel");
 
 
 router.post("/newtask", (req, res) => {
-    
+
     const { taskname,description, from, admin, projectname } = req.body;
 
   

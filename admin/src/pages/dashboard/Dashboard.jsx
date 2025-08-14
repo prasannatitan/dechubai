@@ -12,7 +12,7 @@ const dashboard = () => {
   const [request, setRequest] = useState([])
   const [loadingTaskid, setLoadingTaskid] = useState(null)
 
-
+console.log(datas)
   useEffect(() => {
     async function fetchData() {
       try {

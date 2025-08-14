@@ -93,6 +93,6 @@ const taskModel = new Schema({
   ]
 })
 
-const taskList = mongoose.model('taskList', taskModel);
+const taskList = mongoose.model('Projects', taskModel);
 
 module.exports = taskList;

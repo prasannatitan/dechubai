@@ -1,5 +1,5 @@
 const express = require('express');
-const taskList = require('./models/taskModel');
+const taskList = require('./models/ProjectModel');
 const mongoose = require('mongoose');
 const { port, mongoDBUrl } = require('./config/config');
 const imageRoutes = require('./routes/imageRoutes');
@@ -11,7 +11,7 @@ const taskRequest = require('./routes/taskrequest');
 const { router: superAdminAuth, authenticateToken } = require('./routes/superAdminAuth');
 const cors = require('cors');
 const app = express();
-const gsheet = require('./routes/gSheet');
+
 
 // const allowedOrigins = [
 //   "https://www.dechub.ai",
@@ -28,7 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', imageRoutes);
 app.use('/files', fileFolderRoutes);
-app.use('/api', gsheet);
 app.use('/task', taskRoutes);
 app.use('/taskreq', taskRequest);
 app.use('/project', taskPageRoutes);

@@ -1,4 +1,4 @@
-const taskList = require('../models/taskModel')
+const taskList = require('../models/ProjectModel')
 const express = require('express')
 const {bucket} = require('../config/firebase');
 const { v4: uuidv4 } = require('uuid');

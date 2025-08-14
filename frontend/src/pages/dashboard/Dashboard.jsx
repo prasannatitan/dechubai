@@ -35,8 +35,8 @@ const Dashboard = () => {
   const taskaddref = useRef(null);
 
 
-  const [taskname, setTaskName] = useState("");
-  const [description, setDescription] = useState("");
+    const [taskname, setTaskName] = useState("");
+    const [description, setDescription] = useState("");
   const [formtoggal, setFormtoggal] = useState(false);
 
 
@@ -95,6 +95,11 @@ const Dashboard = () => {
             Authorization: `Bearer ${idToken}`
           }
         });
+      console.log(data);
+       if (!data || data.toLowerCase() === "no data available") {
+          console.error("No project data found");
+          return <div>No project data available</div>;
+        }
         setadmin(data.projectData?.[0].by);
         setProjectName(data.projectData?.[0].name);
         const allOverview = data.projectData.flatMap(doc => doc.Overview);

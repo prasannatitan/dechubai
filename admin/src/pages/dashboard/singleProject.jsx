@@ -19,6 +19,8 @@ import { useAuth } from '../../context/UserContext';
 import Layout from '../../dashboard/Layout'
 import HoursChart from '../../component/hourChart';
 
+import { auth } from '../../firebase';
+
 import daily from '../../assets/dashboard/daily.svg'
 
 import explore from '../../assets/dashboard/explore.webp'
@@ -31,6 +33,7 @@ import penline from '../../assets/dashboard/penline.svg'
 import presentation from '../../assets/dashboard/Presentation.svg';
 
 const singleprojects = () => {
+  
   const { projectname } = useParams();
   const [dataHours, setDataHours] = useState([]);
   const [Overview, setOverview] = useState([]);
@@ -43,17 +46,44 @@ const singleprojects = () => {
 
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const [admin, setadmin] = useState("");
 
-    // send data to backend here
+  const [taskname, setTaskName] = useState("");
+  const [description, setDescription] = useState("");
+    const [formtoggal, setFormtoggal] = useState(false);
+    const [taskadd, setTaskadd] = useState(false);
+    const taskaddref = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const currentDate = new Date().toISOString();
+    const formData = {
+      taskname,
+      description,
+      admin: admin,
+      from: auth.currentUser.email,
+      date: currentDate,
+      projectname: projectname
+    };
+    const {data} = await axios.post(`${import.meta.env.VITE_BASE_URL}/taskreq/newtask`, formData);
+    setFormtoggal(true);
+    setTaskName("");
+    setDescription("");
+  };
+
+
+  const handleSubmitmeet = (e) => {
+    e.preventDefault();
+    
+
+
   };
 
   useEffect(() => {
     const fetchfile = async () => {
       try {
         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/project/get/${projectname}`);
-
+        setadmin(data?.[0]?.by);
         setDataHours(data?.[0]?.hours);
         const allOverview = data.flatMap(doc => doc.Overview);
         const allTasks = data.flatMap(doc => doc.task);
@@ -93,7 +123,25 @@ const singleprojects = () => {
     const year = String(date.getFullYear()).slice(2);
     return `Since ${day} ${month} ${year}`;
   }
-console.log(dataHours)
+
+  
+    useGSAP(function () {
+      if (!taskaddref.current) return;
+  
+      if (taskadd) {
+        gsap.to(taskaddref.current, {
+          opacity: 1,
+          display: "flex",
+          position: "fixed",
+          zIndex: 1000,
+        })
+      } else {
+        gsap.to(taskaddref.current, {
+          opacity: 0,
+          display: "none",
+        })
+      }
+    }, [taskadd])
   return (
     <Layout>
 
@@ -230,7 +278,60 @@ console.log(dataHours)
                     <img src={bookicon} alt="book" />
                     <h2 className="font-bold  text-[16px]">Task List and Deadlines</h2>
                   </div>
-                  <button className="text-purple-600 text-xl">+</button>
+                  <div className='cursor-pointer bg-gray-300 rounded-full px-2 hover:bg-gray-400 transition-all'>
+                    <button onClick={() => { setTaskadd(true) }} className="cursor-pointer text-purple-600 text-xl">+</button>
+                  </div>
+
+
+
+                  {/* popup panel for add task */}
+
+                  <div className='opacity-0 hidden absolute items-center justify-center top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.5)]' ref={taskaddref}>
+
+                    <div className='rounded-2xl bg-white relative p-8'>
+                      <i onClick={() => {
+                        setTaskadd(false)
+                        setFormtoggal(false)}} 
+                        className="cursor-pointer z-2 absolute top-3 right-3 ri-close-large-line"></i>
+                      {!formtoggal ?
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+                          <div className="flex flex-col">
+
+                            <p className='text-[17px] font-semibold mb-2'>Enter information Related to Your New Task</p>
+
+                            <input
+                              placeholder='Task Name'
+                              type="text"
+                              value={taskname}
+                              onChange={(e) => setTaskName(e.target.value)}
+                              className="w-full text-[14px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              required
+                            />
+                          </div>
+                          <div className="flex flex-col">
+
+                            <textarea
+                              placeholder='Description'
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
+                              className="w-full text-[14px] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              rows={4}
+                              required
+                            />
+                          </div>
+                          <button
+                            type="submit"
+                            className="bg-gray-900 hover:bg-black text-white py-2 px-4 rounded "
+                          >
+                            Submit new Task Request
+                          </button>
+                        </form> :
+                        <div>
+                          <p className='text-[50px] text-center'>🎉</p>
+                          <p className='text-4 font-semibold text-center'>You Will see Your Task Status Soon Once <br />Admin Accept your Task Request</p>
+                        </div>}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="text-sm font-medium grid grid-cols-4 text-gray-600 pb-3 pt-1">
@@ -311,7 +412,7 @@ console.log(dataHours)
         <div className='relative'>
           <div className="sticky top-5  p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
             <h2 className="font-bold  text-[16px]">Book a Meeting</h2>
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <form onSubmit={handleSubmitmeet} className="space-y-4 mt-4">
               <div>
                 <label className="block text-sm font-medium text-gray-600">Title</label>
                 <input
