@@ -88,7 +88,8 @@ router.post('/taskList', upload.single('avatar'), async (req, res) => {
 
 
 router.get('/taskList', async (req, res) => {
-    const data = await taskList.find();
+    const email = req.query.email;
+    const data = await taskList.find({ by: email });
     return res.status(200).json({ projects: data })
 })
 module.exports = router

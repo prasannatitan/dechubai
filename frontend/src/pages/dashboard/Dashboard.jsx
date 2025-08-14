@@ -166,7 +166,7 @@ const Dashboard = () => {
     return `Since ${day} ${month} ${year}`;
   }
 
-return (
+ if(!projectname) return <Layout><div>No Data To Show Here</div></Layout>; else return (
     <Layout>
       <div className='p-6 flex gap-5'>
         <div className='flex flex-col gap-5 max-w-[850px] w-full'>

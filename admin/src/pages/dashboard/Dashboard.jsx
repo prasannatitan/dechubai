@@ -13,10 +13,11 @@ const dashboard = () => {
   const [loadingTaskid, setLoadingTaskid] = useState(null)
 
 console.log(datas)
+const email = auth.currentUser.email
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/task/taskList`)
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/task/taskList`, { params: { email: email } })
         if (data) {
           setDatas(data.projects)
         }
