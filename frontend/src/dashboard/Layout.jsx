@@ -9,7 +9,7 @@ const layout = ({ children }) => {
   const name = user?.email
 
     return (
-        <div className="flex w-full bg-cover bg-no-repeat bg-center"  style={{ backgroundImage: `url(${dashbg})` }}>
+        <div className="flex w-full bg-cover bg-no-repeat bg-center bg-fixed"  style={{ backgroundImage: `url(${dashbg})` }}>
             <Sidebar />
             <div className='w-full'>
                <div className='max-w-[1300px] mx-auto'>

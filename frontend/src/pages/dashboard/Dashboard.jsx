@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 
+import Loader from '../../component/loader';
 
 ChartJS.register(ArcElement, Tooltip);
 
@@ -29,16 +30,16 @@ const Dashboard = () => {
   const [duration, setDuration] = useState("30");
   const [Overview, setOverview] = useState([]);
   const [taskdata, setTaskdata] = useState([]);
+  const [loading, setLoading] = useState(false);
   
   const [statistics, setStatistics] = useState({});
   const [taskadd, setTaskadd] = useState(false);
   const taskaddref = useRef(null);
 
 
-    const [taskname, setTaskName] = useState("");
-    const [description, setDescription] = useState("");
+  const [taskname, setTaskName] = useState("");
+  const [description, setDescription] = useState("");
   const [formtoggal, setFormtoggal] = useState(false);
-
 
   const [admin, setadmin] = useState("");
   const [projectname, setProjectName] = useState("");
@@ -86,6 +87,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const idToken = await auth.currentUser.getIdToken(true);
 
@@ -103,6 +105,7 @@ const Dashboard = () => {
         setOverview(allOverview);
         setTaskdata(allTasks);
         setStatistics(allStatistics)
+        setLoading(false);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
@@ -130,7 +133,6 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  if (!data) return <div>Loading...</div>;
 
   const chartData = {
     labels: ["Completed", "Underprogress", "Needs Revision", "Work Left"],
@@ -149,7 +151,7 @@ const Dashboard = () => {
     labels: ["Cyber Security"],
     datasets: [
       {
-        data: [data.CyberSecurity, data.cyberblank],
+        data: [data?.CyberSecurity, data?.cyberblank],
         backgroundColor: ["#643A97", "rgba(100,58,151,0.14)"],
         borderWidth: 0,
         borderRadius: 4
@@ -166,7 +168,11 @@ const Dashboard = () => {
     return `Since ${day} ${month} ${year}`;
   }
 
- if(!projectname) return <Layout><div>No Data To Show Here</div></Layout>; else return (
+if (!projectname || loading === true) {
+  return <Layout><div className='w-full h-screen flex justify-center items-center'><Loader /></div></Layout>;
+} else if (!projectname) {
+  return <div><Layout><div className='w-full h-[400px] flex justify-center items-center'>No enough Data to Show Here</div></Layout></div>;
+} else return (
     <Layout>
       <div className='p-6 flex gap-5'>
         <div className='flex flex-col gap-5 max-w-[850px] w-full'>

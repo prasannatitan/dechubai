@@ -6,6 +6,7 @@ import Inbox from './pages/dashboard/inbox'
 import FolderPage from './pages/dashboard/folderPage';
 import Singleproject from './pages/dashboard/singleProject'
 import CreateProject from './pages/dashboard/crateProject';
+import CustomerSupportPage from './pages/dashboard/support';
 
 
 const DashboardRoutes = () => {
@@ -20,6 +21,7 @@ const DashboardRoutes = () => {
        <Route path="new" element={<CreateProject />} />
       <Route path="analytics" element={<Analytics />} />
       <Route path="reports" element={<Reports/>}/>
+      <Route path="support" element={<CustomerSupportPage />} />
    
      </Routes>
   )
