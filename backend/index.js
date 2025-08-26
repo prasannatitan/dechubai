@@ -11,7 +11,8 @@ const taskRequest = require('./routes/taskrequest');
 const { router: superAdminAuth, authenticateToken } = require('./routes/superAdminAuth');
 const cors = require('cors');
 const app = express();
-
+const authRoute = require('./routes/authRoute');
+require('./config/passport');
 
 // const allowedOrigins = [
 //   "https://www.dechub.ai",
@@ -26,6 +27,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+app.use('/auth', authRoute)
 app.use('/', imageRoutes);
 app.use('/files', fileFolderRoutes);
 app.use('/task', taskRoutes);
