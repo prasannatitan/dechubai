@@ -61,7 +61,7 @@ const Header = () => {
                        
                             <>
                               
-                             <Link className="bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] lg:py-[10px] lg:px-10 py-[6px] px-7 text-white lg:rounded-[20px] rounded-[23px] text-[18px] max-md:text-[17px] max-sm:text-[16px] max-md:py-[8px] max-md:px-8" to='https://admin.dechub.ai/login'>Login as Admin</Link>
+                             <Link className="bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] lg:py-[10px] lg:px-10 py-[6px] px-7 text-white lg:rounded-[20px] rounded-[23px] text-[18px] max-md:text-[17px] max-sm:text-[16px] max-md:py-[8px] max-md:px-8" to='https://admin.dechub.ai'>Login as Admin</Link>
                                         
                             </>
                         
