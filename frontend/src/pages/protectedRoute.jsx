@@ -4,13 +4,18 @@ import { useAuth } from "../context/UserContext";
 import Loader from '../component/loader';
 
 const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
 
-
-    if (loading) return <div className='h-screen w-screen flex justify-center items-center'><Loader/></div>;
+ if (loading) {
+    return <div>Loading...</div>; // or a spinner
+  }
   
+   if (!isLoggedIn) {
+    return <Navigate to="/auth" replace />;
+  }
 
-  return user ? children : <Navigate to="/login" replace />;
+
+  return children
 };
 
 export default ProtectedRoute;

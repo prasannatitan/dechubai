@@ -89,14 +89,16 @@ const Dashboard = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const idToken = await auth.currentUser.getIdToken(true);
+        const idToken =  localStorage.getItem('accessToken');
 
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/protected-data`, {
+         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/protected-data`
+        , {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${idToken}`
           }
-        }); 
+        }
+        ); 
         setadmin(data.projectData?.[0].by);
         setProjectName(data.projectData?.[0].name);
         const allOverview = data.projectData.flatMap(doc => doc.Overview);

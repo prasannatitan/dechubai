@@ -13,7 +13,7 @@ import support from '../assets/dashboard/support.svg'
 import reports from '../assets/dashboard/reports.svg'
 
 const sidebar = () => {
-    const { logout } = useAuth();
+   const {logout} = useAuth();
     const sidebar = [
         {
             icon: dashboard,

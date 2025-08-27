@@ -4,6 +4,11 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/userModel');
 const {isAuthenticated} = require('../Middleware/passportAuthMideel');
+const { logoutUser } = require('../controller/userController');
+
+
+
+
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback',
@@ -21,10 +26,17 @@ router.get('/google/callback',
 
 )
 
-router.get("/me", isAuthenticated, async (req, res) => {
+router.get("/verify", isAuthenticated, async (req, res) => {
     res.json({
         success: true,
         user: req.user
     })
  })
+
+
+
+
+
+
+ router.post('/logout',isAuthenticated, logoutUser)
 module.exports = router;

@@ -15,24 +15,26 @@ import Footer from './component/footer';
 import ProtectedRoute from './pages/protectedRoute';
 import PrivacyPolicy from './pages/privacypolicy'
 import TermsOfService from './pages/TermsOfService'
-
+import Authsuccess from './pages/AuthSuccess';
 import DashboardRoutes from './dashboard'
 
+import { useAuth } from './context/UserContext';
 const LayoutWrapper = () => {
   const location = useLocation();
   const hideLayout =
     location.pathname === '/signup' ||
-    location.pathname === '/login' ||
+    location.pathname === '/auth' ||
     location.pathname.startsWith('/dashboard');
-
-    console.log('App rendered');
+  const {user} = useAuth();
+ 
 
   return (
     <>
       {!hideLayout && <Header />}
       <ToastContainer />
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/auth-success" element={<Authsuccess />} />
+        <Route path="/auth" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
 
