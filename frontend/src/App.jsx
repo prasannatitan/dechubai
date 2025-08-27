@@ -17,6 +17,7 @@ import PrivacyPolicy from './pages/privacypolicy'
 import TermsOfService from './pages/TermsOfService'
 import Authsuccess from './pages/AuthSuccess';
 import DashboardRoutes from './dashboard'
+import PageNotFound from './pages/404';
 
 import { useAuth } from './context/UserContext';
 const LayoutWrapper = () => {
@@ -37,6 +38,7 @@ const LayoutWrapper = () => {
         <Route path="/auth" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<PageNotFound />} />
 
 
         <Route path="/dashboard/*" element={<ProtectedRoute><DashboardRoutes /></ProtectedRoute>} />
