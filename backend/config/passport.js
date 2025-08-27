@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 passport.use(new GoogleStrategy({
     clientID: google_client_id,
     clientSecret: google_client_secret,
-    callbackURL: "/auth/google/callback"
+    callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`
 },
     async (accessToken, refreshToken, profile, cb) => {
         try {
