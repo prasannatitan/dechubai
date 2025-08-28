@@ -6,6 +6,7 @@ import Section from '../component/section'
 
 import StylishSlide from '../component/stylishSlide'
 
+
 import circle from '../assets/home/circles.webp'
 import comboxbg from '../assets/home/Component box bg.png'
 import polygon from '../assets/home/polygon.svg'
