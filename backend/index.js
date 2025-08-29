@@ -11,7 +11,8 @@ const taskRequest = require('./routes/taskrequest');
 const { router: superAdminAuth, authenticateToken } = require('./routes/superAdminAuth');
 const cors = require('cors');
 const app = express();
-const authRoute = require('./routes/authRoute');
+const authRouteUser = require('./routes/UserAuthRoute');
+const authRouteAdmin = require('./routes/AdminAuthRoute');
 require('./config/passport');
 
 // const allowedOrigins = [
@@ -28,7 +29,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use('/auth', authRoute)
+app.use('/auth/user', authRouteUser)
+app.use('/auth/admin', authRouteAdmin)
 app.use('/', imageRoutes);
 app.use('/files', fileFolderRoutes);
 app.use('/task', taskRoutes);

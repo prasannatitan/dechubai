@@ -7,25 +7,23 @@ const {isAuthenticated} = require('../Middleware/passportAuthMideel');
 const { logoutUser } = require('../controller/userController');
 
 
-
-
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google', passport.authenticate('google-admin', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback',
 
-    passport.authenticate('google', { session: false }),
+    passport.authenticate('google-admin', { session: false }),
     (req, res) => {
         try {
             const token = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '2d' });
-            res.redirect(`${process.env.CLIENT_URL}/auth-success?token=${token}`);
+            // res.redirect(`${process.env.ADMIN_CLIENT_URL}/auth-success?token=${token}`);
+              res.redirect(`${process.env.ADMIN_CLIENT_URL}`);
         } catch (err) {
             console.error(err);
-            res.redirect(`${process.env.CLIENT_URL}/login?error=google_failure`);
+            res.redirect(`${process.env.ADMIN_CLIENT_URL}/login?error=google_failure`);
         }
     }
 
 )
-
 router.get("/verify", isAuthenticated, async (req, res) => {
     res.json({
         success: true,
@@ -33,10 +31,6 @@ router.get("/verify", isAuthenticated, async (req, res) => {
     })
  })
 
+router.post('/logout',isAuthenticated, logoutUser)
 
-
-
-
-
- router.post('/logout',isAuthenticated, logoutUser)
 module.exports = router;

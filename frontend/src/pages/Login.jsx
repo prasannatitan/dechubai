@@ -101,7 +101,7 @@ const Login = () => {
 				</form> */}
 
 
-				<button onClick={() => window.open(`${import.meta.env.VITE_BASE_URL}/auth/google`, "_self")} className="w-full border border-gray-200 flex justify-center gap-3 shadow-lg cursor-pointer hover:shadow-md hover:bg-gray-100 py-2 rounded-md" variant="outline">
+				<button onClick={() => window.open(`${import.meta.env.VITE_BASE_URL}/auth/user/google`, "_self")} className="w-full border border-gray-200 flex justify-center gap-3 shadow-lg cursor-pointer hover:shadow-md hover:bg-gray-100 py-2 rounded-md" variant="outline">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 48 48"

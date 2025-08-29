@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/auth/verify`,
+        `${import.meta.env.VITE_BASE_URL}/auth/user/verify`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
       const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/auth/logout`,
+        `${import.meta.env.VITE_BASE_URL}/auth/user/logout`,
         {},
         {
           headers: {
