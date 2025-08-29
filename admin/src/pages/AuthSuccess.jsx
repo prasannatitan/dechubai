@@ -14,7 +14,7 @@ const authsuccess = () => {
             if (accessToken) {
                 localStorage.setItem('accessToken', accessToken);
                 try {
-                    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/user/verify`,
+                    const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/admin/verify`,
                         {
                             headers: {
                                 Authorization: `Bearer ${accessToken}`
@@ -23,7 +23,7 @@ const authsuccess = () => {
                     );
                     if (res.data.success) {
                         setUser(res.data.user)
-                        navigate('/dashboard/home', { replace: true });
+                        navigate('/', { replace: true });
                        
                     }
 

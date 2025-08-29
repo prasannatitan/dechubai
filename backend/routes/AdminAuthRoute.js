@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/userModel');
-const {isAuthenticated} = require('../Middleware/passportAuthMideel');
+const {isAuthenticatedAdmin} = require('../Middleware/passportAuthMideel');
 const { logoutUser } = require('../controller/userController');
 
 
@@ -16,7 +16,7 @@ router.get('/google/callback',
         try {
             const token = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '2d' });
             // res.redirect(`${process.env.ADMIN_CLIENT_URL}/auth-success?token=${token}`);
-              res.redirect(`${process.env.ADMIN_CLIENT_URL}`);
+              res.redirect(`${process.env.ADMIN_CLIENT_URL}/auth-success?token=${token}`);
         } catch (err) {
             console.error(err);
             res.redirect(`${process.env.ADMIN_CLIENT_URL}/login?error=google_failure`);
@@ -24,13 +24,13 @@ router.get('/google/callback',
     }
 
 )
-router.get("/verify", isAuthenticated, async (req, res) => {
+router.get("/verify", isAuthenticatedAdmin, async (req, res) => {
     res.json({
         success: true,
         user: req.user
     })
  })
 
-router.post('/logout',isAuthenticated, logoutUser)
+router.post('/logout',isAuthenticatedAdmin, logoutUser)
 
 module.exports = router;

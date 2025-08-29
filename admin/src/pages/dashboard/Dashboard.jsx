@@ -6,14 +6,15 @@ import { auth } from '../../firebase';
 import request from '../../assets/dashboard/request.svg';
 import presentation from '../../assets/dashboard/Presentation.svg';
 import { Plus, Edit } from 'lucide-react'
+import { useAuth } from '../../context/UserContext';
 
 const dashboard = () => {
   let [datas, setDatas] = useState([])
   const [request, setRequest] = useState([])
   const [loadingTaskid, setLoadingTaskid] = useState(null)
 
-console.log(datas)
-const email = auth.currentUser.email
+const { user } = useAuth();
+const email = user.email
   useEffect(() => {
     async function fetchData() {
       try {
@@ -52,7 +53,7 @@ const email = auth.currentUser.email
 
   async function fetchData() {
 
-    const email = auth.currentUser.email
+   
 
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/taskreq/gettask`, { params: { email: email } })

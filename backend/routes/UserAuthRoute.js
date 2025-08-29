@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/userModel');
-const {isAuthenticated} = require('../Middleware/passportAuthMideel');
+const {isAuthenticatedUser} = require('../Middleware/passportAuthMideel');
 const { logoutUser } = require('../controller/userController');
 
 
@@ -23,13 +23,13 @@ router.get('/google/callback',
     }
 
 )
-router.get("/verify", isAuthenticated, async (req, res) => {
+router.get("/verify", isAuthenticatedUser, async (req, res) => {
     res.json({
         success: true,
         user: req.user
     })
  })
 
-router.post('/logout',isAuthenticated, logoutUser)
+router.post('/logout',isAuthenticatedUser, logoutUser)
 
 module.exports = router;

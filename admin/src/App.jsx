@@ -6,8 +6,10 @@ import Login from './pages/Login';
 import DashboardRoutes from './dashboard'
 import ProtectedRoute from './pages/protectedRoute';
 import PageNotFound from './pages/PageNotFound'
+import Authsuccess from './pages/AuthSuccess';
 
 // Super Admin Pages
+
 import ProjectList from './pages/superAdmin/ProjectList'
 import ProjectEdit from './pages/superAdmin/ProjectEdit'
 import CreateProject from './pages/superAdmin/CreateProject'
@@ -49,7 +51,7 @@ const LayoutWrapper = () => {
           } />
           <Route index element={<Navigate to="projects" replace />} />
         </Route>
-
+ <Route path="/auth-success" element={<Authsuccess />} />
         <Route path="/auth" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

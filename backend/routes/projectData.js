@@ -1,14 +1,14 @@
 const admin = require("firebase-admin");
 const express = require("express");
 const router = express.Router();
-const {isAuthenticated} = require("../Middleware/passportAuthMideel");
+const {isAuthenticatedUser} = require("../Middleware/passportAuthMideel");
 
 const taskModel = require("../models/ProjectModel");
 
 
 
 // In your Express route handler
-router.get("/protected-data",isAuthenticated, async (req, res) => {
+router.get("/protected-data",isAuthenticatedUser, async (req, res) => {
     const email = req.user.email;
     
     const projectData = await taskModel.find({ for: email });
