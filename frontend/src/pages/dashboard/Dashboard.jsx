@@ -4,6 +4,8 @@ import { useGSAP } from '@gsap/react';
 import gsap from "gsap";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 
 import Loader from '../../component/loader';
 
@@ -31,7 +33,7 @@ const Dashboard = () => {
   const [Overview, setOverview] = useState([]);
   const [taskdata, setTaskdata] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const [statistics, setStatistics] = useState({});
   const [taskadd, setTaskadd] = useState(false);
   const taskaddref = useRef(null);
@@ -43,6 +45,7 @@ const Dashboard = () => {
 
   const [admin, setadmin] = useState("");
   const [projectname, setProjectName] = useState("");
+  
   const handleSubmitmeet = (e) => {
     e.preventDefault();
 
@@ -99,10 +102,13 @@ const Dashboard = () => {
           }
         }
         ); 
+     console.log(data)
         setadmin(data.projectData?.[0].by);
         setProjectName(data.projectData?.[0].name);
         const allOverview = data.projectData.flatMap(doc => doc.Overview);
+       
         const allTasks = data.projectData.flatMap(doc => doc.task);
+        
         const allStatistics = data.projectData.flatMap(doc => doc.Statistics);
         setOverview(allOverview);
         setTaskdata(allTasks);
@@ -149,17 +155,8 @@ const Dashboard = () => {
     ],
   };
 
-  const cyberSecurity = {
-    labels: ["Cyber Security"],
-    datasets: [
-      {
-        data: [data?.CyberSecurity, data?.cyberblank],
-        backgroundColor: ["#643A97", "rgba(100,58,151,0.14)"],
-        borderWidth: 0,
-        borderRadius: 4
-      }
-    ]
-  }
+
+
 
 
   function formatDate(dateStr) {
@@ -167,7 +164,7 @@ const Dashboard = () => {
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'short' });
     const year = String(date.getFullYear()).slice(2);
-    return `Since ${day} ${month} ${year}`;
+    return `${day} ${month} ${year}`;
   }
 
 if (!projectname || loading === true) {
@@ -328,62 +325,48 @@ if (!projectname || loading === true) {
             </div>
           </div>
 
-          <div className='grid grid-cols-3 gap-5'>
-            <div className="col-span-1 rounded-xl p-4 shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
+
+ <div className='grid grid-cols-3 gap-5'>
+  {Overview.map((item, idx) => {
+     const data = {
+          labels: [item.name, "Remaining"],
+          datasets: [
+            {
+              data: [item.status, 100 - item.status], // example: show status vs remaining
+              backgroundColor: ["#643A97", "rgba(100,58,151,0.14)"],
+        borderWidth: 0,
+        borderRadius: 4
+            }
+          ]
+        };
+        
+        
+        return(
+         
+            <div key={idx} className="col-span-1 rounded-xl p-4 shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
               <div className='flex justify-between w-full items-center'>
-                <div className='opacity-[58%] text-[13px]'>2 Mar 24</div>
-                <div className='opacity-[58%] text-[13px] bg-[#E1C9FF] rounded-full py-[5px] px-3'>4 days left</div>
+                <div className='opacity-[58%] text-[13px]'>Created on</div>
+                <div className='opacity-[58%] text-[13px] bg-[#E1C9FF] rounded-full py-[5px] px-3'>{formatDate(item.createdAt)}</div>
               </div>
               <div className='p-10 py-3 relative flex justify-center items-center'>
-                <Doughnut data={cyberSecurity} options={{ cutout: "55%", plugins: { legend: { display: false } } }} />
+                <Doughnut data={data} options={{ cutout: "55%", plugins: { legend: { display: false } } }} />
                 <img className='absolute' src={eye} alt="eye" />
               </div>
               <div className='px-4'>
-                <h3 className='font-bold text-[20px]'>Cyber Security</h3>
+                <h3 className='font-bold text-[20px]'>{item.name}</h3>
                 <div className='flex justify-between '>
-                  <p className='opacity-[63%] text-[15px] font-bold'>Security Services</p>
-                  <p className='opacity-[63%] text-[16px] font-bold'>{data.CyberSecurity}%</p>
+                  <p className='opacity-[63%] text-[15px] font-bold'>Progress</p>
+                  <p className='opacity-[63%] text-[16px] font-bold'>{item.status}%</p>
                 </div>
               </div>
             </div>
+          
+        )
 
-            <div className="col-span-1 rounded-xl p-4 shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
-              <div className='flex justify-between w-full items-center'>
-                <div className='opacity-[58%] text-[13px]'>2 Mar 24</div>
-                <div className='opacity-[58%] text-[13px] bg-[#E1C9FF] rounded-full py-[5px] px-3'>4 days left</div>
-              </div>
-              <div className='p-10 py-3 relative flex justify-center items-center'>
-                <Doughnut data={cyberSecurity} options={{ cutout: "55%", plugins: { legend: { display: false } } }} />
-                <img className='absolute' src={chartbar} alt="chart bar" />
-              </div>
-              <div className='px-4'>
-                <h3 className='font-bold text-[20px]'>Cyber Security</h3>
-                <div className='flex justify-between '>
-                  <p className='opacity-[63%] text-[15px] font-bold'>Security Services</p>
-                  <p className='opacity-[63%] text-[16px] font-bold'>{data.CyberSecurity}%</p>
-                </div>
-              </div>
-            </div>
+           })}
+           </div>
 
-            <div className="col-span-1 rounded-xl p-4 shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
-              <div className='flex justify-between w-full items-center'>
-                <div className='opacity-[58%] text-[13px]'>2 Mar 24</div>
-                <div className='opacity-[58%] text-[13px] bg-[#E1C9FF] rounded-full py-[5px] px-3'>4 days left</div>
-              </div>
-              <div className='p-10 py-3 relative flex justify-center items-center'>
-                <Doughnut data={cyberSecurity} options={{ cutout: "55%", plugins: { legend: { display: false } } }} />
-                <img className='absolute' src={penline} alt="pen line" />
-              </div>
-              <div className='px-4'>
-                <h3 className='font-bold text-[20px]'>Cyber Security</h3>
-                <div className='flex justify-between '>
-                  <p className='opacity-[63%] text-[15px] font-bold'>Security Services</p>
-                  <p className='opacity-[63%] text-[16px] font-bold'>{data.CyberSecurity}%</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
+           
 
 
         </div>

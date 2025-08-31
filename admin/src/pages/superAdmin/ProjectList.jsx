@@ -188,12 +188,7 @@ export default function ProjectList() {
                                     </span>
                                     
                                     <div className="flex gap-2">
-                                        <Link
-                                            to={`/admin/projects/${project._id}`}
-                                            className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
-                                        >
-                                            <Eye className="w-4 h-4" />
-                                        </Link>
+                                       
                                         <Link
                                             to={`/admin/projects/${project._id}/edit`}
                                             className="p-2 text-gray-600 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"

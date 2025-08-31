@@ -7,7 +7,6 @@ import dashbg from '../assets/dashboard/dash bg.webp'
 const layout = ({ children }) => {
   const { user } = useAuth()
   const avatar = user?.avatar
-  console.log("User avatar:", avatar);
   const name = user?.username
 
   return (

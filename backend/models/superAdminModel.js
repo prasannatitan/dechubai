@@ -20,11 +20,6 @@ const superAdminSchema = new Schema({
         required: true,
         minlength: 6
     },
-    role: {
-        type: String,
-        default: 'super_admin',
-        enum: ['super_admin']
-    },
     isActive: {
         type: Boolean,
         default: true

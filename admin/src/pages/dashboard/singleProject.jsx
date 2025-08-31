@@ -89,6 +89,7 @@ const singleprojects = () => {
         const allTasks = data.flatMap(doc => doc.task);
         const allStatistics = data.flatMap(doc => doc.Statistics);
         setOverview(allOverview);
+        console.log("over is" + allOverview)
         setTaskdata(allTasks);
         setStatistics(allStatistics)
 

@@ -18,12 +18,12 @@ import SuperAdminProtectedRoute from './components/SuperAdminProtectedRoute'
 import { SuperAdminProvider } from './context/SuperAdminContext'
 
 const LayoutWrapper = () => {
- 
-   const location = useLocation();
-    if(location.pathname === '/' ){
-      return <Navigate to="/app" />
-    }
- 
+
+  const location = useLocation();
+  if (location.pathname === '/') {
+    return <Navigate to="/app" />
+  }
+
 
   return (
     <>
@@ -51,7 +51,7 @@ const LayoutWrapper = () => {
           } />
           <Route index element={<Navigate to="projects" replace />} />
         </Route>
- <Route path="/auth-success" element={<Authsuccess />} />
+        <Route path="/auth-success" element={<Authsuccess />} />
         <Route path="/auth" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

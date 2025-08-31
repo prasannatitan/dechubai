@@ -4,7 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/userModel');
 const {isAuthenticatedAdmin} = require('../Middleware/passportAuthMideel');
-const { logoutUser } = require('../controller/userController');
+const { logoutAdmin } = require('../controller/userController');
 
 
 router.get('/google', passport.authenticate('google-admin', { scope: ['profile', 'email'] }));
@@ -31,6 +31,6 @@ router.get("/verify", isAuthenticatedAdmin, async (req, res) => {
     })
  })
 
-router.post('/logout',isAuthenticatedAdmin, logoutUser)
+router.post('/logout',isAuthenticatedAdmin, logoutAdmin)
 
 module.exports = router;

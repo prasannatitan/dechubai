@@ -79,6 +79,10 @@ const taskModel = new Schema({
         type: Date,
         default: Date.now
       },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
     }
   ],
   hours: [
