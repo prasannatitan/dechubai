@@ -15,7 +15,7 @@ router.get("/protected-data",isAuthenticatedUser, async (req, res) => {
 
     if (!projectData || projectData.length === 0) {
         
-        return res.status(200).json({ data: "No data available" });
+        return res.status(200).json({ data: "empty" });
     }
     res.json({ projectData });
 });

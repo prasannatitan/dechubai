@@ -4,12 +4,11 @@ import { useGSAP } from '@gsap/react';
 import gsap from "gsap";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 
 import Loader from '../../component/loader';
 
 ChartJS.register(ArcElement, Tooltip);
+
 
 import Layout from '../../dashboard/Layout'
 import 'remixicon/fonts/remixicon.css'
@@ -18,13 +17,12 @@ import services from '../../assets/dashboard/services.webp'
 import bookicon from '../../assets/dashboard/bookicon.svg'
 import chart from '../../assets/dashboard/Chart Pie.svg'
 import eye from '../../assets/dashboard/eye.svg'
-import chartbar from '../../assets/dashboard/chartbar.svg'
-import penline from '../../assets/dashboard/penline.svg'
 
 import axios from 'axios';
-import { auth } from '../../firebase';
+import { useAuth } from '../../context/UserContext';
 
 const Dashboard = () => {
+  const { user } = useAuth()
   const [data, setData] = useState(null);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -45,7 +43,7 @@ const Dashboard = () => {
 
   const [admin, setadmin] = useState("");
   const [projectname, setProjectName] = useState("");
-  
+
   const handleSubmitmeet = (e) => {
     e.preventDefault();
 
@@ -59,11 +57,11 @@ const Dashboard = () => {
       taskname,
       description,
       admin: admin,
-      from: auth.currentUser.email,
+      from: user.email,
       date: currentDate,
       projectname: projectname
     };
-    const {data} = await axios.post(`${import.meta.env.VITE_BASE_URL}/taskreq/newtask`, formData);
+    const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}/taskreq/newtask`, formData);
     setFormtoggal(true);
     setTaskName("");
     setDescription("");
@@ -92,24 +90,23 @@ const Dashboard = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const idToken =  localStorage.getItem('accessToken');
+        const idToken = localStorage.getItem('accessToken');
 
-         const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/protected-data`
-        , {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`
+        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/protected-data`
+          , {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${idToken}`
+            }
           }
-        }
-        ); 
-     console.log(data)
+        );
+        setData(data);
         setadmin(data.projectData?.[0].by);
         setProjectName(data.projectData?.[0].name);
-        const allOverview = data.projectData.flatMap(doc => doc.Overview);
-       
-        const allTasks = data.projectData.flatMap(doc => doc.task);
-        
-        const allStatistics = data.projectData.flatMap(doc => doc.Statistics);
+        const allOverview = data?.projectData?.flatMap(doc => doc.Overview) || [];
+        const allTasks = data?.projectData?.flatMap(doc => doc.task) || [];
+        const allStatistics = data?.projectData?.flatMap(doc => doc.Statistics) || [];
+
         setOverview(allOverview);
         setTaskdata(allTasks);
         setStatistics(allStatistics)
@@ -123,24 +120,7 @@ const Dashboard = () => {
   }, []);
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = {
-        completed: 63,
-        underProgress: 20,
-        needsRevision: 10,
-        workLeft: 7,
-        CyberSecurity: 40,
-        cyberblank: 60,
-        PerformanceMarketing: 45,
-        Branding: 30
-      };
-      setData(response);
-    };
-
-    fetchData();
-  }, []);
-
+  
 
   const chartData = {
     labels: ["Completed", "Underprogress", "Needs Revision", "Work Left"],
@@ -166,12 +146,12 @@ const Dashboard = () => {
     const year = String(date.getFullYear()).slice(2);
     return `${day} ${month} ${year}`;
   }
-
-if (!projectname || loading === true) {
-  return <Layout><div className='w-full h-screen flex justify-center items-center'><Loader /></div></Layout>;
-} else if (!projectname) {
-  return <div><Layout><div className='w-full h-[400px] flex justify-center items-center'>No enough Data to Show Here</div></Layout></div>;
-} else return (
+ 
+  if (loading) {
+    return <Layout><div className='w-full h-screen flex justify-center items-center'><Loader /></div></Layout>;
+  } else if (data?.data === "empty") {
+    return <div><Layout><div className='w-full h-[400px] flex justify-center items-center'>No enough Data to Show Here</div></Layout></div>;
+  } else return (
     <Layout>
       <div className='p-6 flex gap-5'>
         <div className='flex flex-col gap-5 max-w-[850px] w-full'>
@@ -213,7 +193,8 @@ if (!projectname || loading === true) {
                     <div className='rounded-2xl bg-white relative p-8'>
                       <i onClick={() => {
                         setTaskadd(false)
-                        setFormtoggal(false)}} 
+                        setFormtoggal(false)
+                      }}
                         className="cursor-pointer z-2 absolute top-3 right-3 ri-close-large-line"></i>
                       {!formtoggal ?
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
@@ -275,11 +256,11 @@ if (!projectname || loading === true) {
                   ))}
                 </div>
 
-                  {taskdata.length === 0 ?
-                <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
-                  <p className="text-gray-500 text-xl font-medium">No enough data available</p>
-                </div>
-                : ""}
+                {taskdata.length === 0 ?
+                  <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
+                    <p className="text-gray-500 text-xl font-medium">No enough data available</p>
+                  </div>
+                  : ""}
               </div>
             </div>
 
@@ -316,119 +297,64 @@ if (!projectname || loading === true) {
                   </div>
                 </div>
 
-                 {statistics?.[0]?.completed === 0 & statistics?.[0]?.Underprogress === 0 & statistics?.[0]?.needsRevision === 0 & statistics?.[0]?.WorkLeft === 0 ?
-                <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
-                  <p className="text-gray-500 text-xl font-medium">No enough data available</p>
-                </div>
-                : ""}
+                {statistics?.[0]?.completed === 0 & statistics?.[0]?.Underprogress === 0 & statistics?.[0]?.needsRevision === 0 & statistics?.[0]?.WorkLeft === 0 ?
+                  <div className="absolute inset-0 flex items-center justify-center bg-white/10 bg-opacity-[1] backdrop-blur-sm">
+                    <p className="text-gray-500 text-xl font-medium">No enough data available</p>
+                  </div>
+                  : ""}
               </div>
             </div>
           </div>
 
 
- <div className='grid grid-cols-3 gap-5'>
-  {Overview.map((item, idx) => {
-     const data = {
-          labels: [item.name, "Remaining"],
-          datasets: [
-            {
-              data: [item.status, 100 - item.status], // example: show status vs remaining
-              backgroundColor: ["#643A97", "rgba(100,58,151,0.14)"],
-        borderWidth: 0,
-        borderRadius: 4
-            }
-          ]
-        };
-        
-        
-        return(
-         
-            <div key={idx} className="col-span-1 rounded-xl p-4 shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
-              <div className='flex justify-between w-full items-center'>
-                <div className='opacity-[58%] text-[13px]'>Created on</div>
-                <div className='opacity-[58%] text-[13px] bg-[#E1C9FF] rounded-full py-[5px] px-3'>{formatDate(item.createdAt)}</div>
-              </div>
-              <div className='p-10 py-3 relative flex justify-center items-center'>
-                <Doughnut data={data} options={{ cutout: "55%", plugins: { legend: { display: false } } }} />
-                <img className='absolute' src={eye} alt="eye" />
-              </div>
-              <div className='px-4'>
-                <h3 className='font-bold text-[20px]'>{item.name}</h3>
-                <div className='flex justify-between '>
-                  <p className='opacity-[63%] text-[15px] font-bold'>Progress</p>
-                  <p className='opacity-[63%] text-[16px] font-bold'>{item.status}%</p>
+          <div className='grid grid-cols-3 gap-5'>
+            {Overview.map((item, idx) => {
+              const data = {
+                labels: [item.name, "Remaining"],
+                datasets: [
+                  {
+                    data: [item.status, 100 - item.status], // example: show status vs remaining
+                    backgroundColor: ["#643A97", "rgba(100,58,151,0.14)"],
+                    borderWidth: 0,
+                    borderRadius: 4
+                  }
+                ]
+              };
+
+
+              return (
+
+                <div key={idx} className="col-span-1 rounded-xl p-4 shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
+                  <div className='flex justify-between w-full items-center'>
+                    <div className='opacity-[58%] text-[13px]'>Created on</div>
+                    <div className='opacity-[58%] text-[13px] bg-[#E1C9FF] rounded-full py-[5px] px-3'>{formatDate(item.createdAt)}</div>
+                  </div>
+                  <div className='p-10 py-3 relative flex justify-center items-center'>
+                    <Doughnut data={data} options={{ cutout: "55%", plugins: { legend: { display: false } } }} />
+                    <img className='absolute' src={eye} alt="eye" />
+                  </div>
+                  <div className='px-4'>
+                    <h3 className='font-bold text-[20px]'>{item.name}</h3>
+                    <div className='flex justify-between '>
+                      <p className='opacity-[63%] text-[15px] font-bold'>Progress</p>
+                      <p className='opacity-[63%] text-[16px] font-bold'>{item.status}%</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          
-        )
 
-           })}
-           </div>
+              )
 
-           
+            })}
+          </div>
 
 
-        </div>
+
+
+        </div> 
         <div className='relative'>
           <div className="sticky top-5 p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
             <h2 className="font-bold  text-[16px]">Book a Meeting</h2>
-            <form onSubmit={handleSubmitmeet} className="space-y-4 mt-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-600">Title</label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Design Review"
-                  className="w-full px-4 py-2 text-sm mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-600">Date</label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full px-4 py-2 text-sm mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-600">Time</label>
-                <input
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="w-full px-4 py-2 text-sm mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-600">Duration</label>
-                <select
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                  className="w-full px-4 text-sm py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  <option value="15">15 minutes</option>
-                  <option value="30">30 minutes</option>
-                  <option value="45">45 minutes</option>
-                  <option value="60">1 hour</option>
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[#6f10c5] text-white py-2 rounded-lg hover:bg-purple-700 transition"
-              >
-                Schedule Meeting
-              </button>
-            </form>
+            {/* <Meetbooking /> */}
           </div>
         </div>
       </div>

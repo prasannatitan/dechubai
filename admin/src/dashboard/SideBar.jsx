@@ -18,8 +18,8 @@ const sidebar = () => {
     const { logout } = useAuth();
     const sidebar = [
         {
-            icon: dashboard,
-            text: "Dashboard",
+            icon: projects,
+            text: "Projects",
             url: "/app/projects"
         },
         {
@@ -27,11 +27,7 @@ const sidebar = () => {
             text: "inbox",
             url: "/app/inbox"
         },
-        {
-            icon: projects,
-            text: "Projects",
-            url: "/app/Projects"
-        },
+      
         {
             icon: performance,
             text: "Analytics",
