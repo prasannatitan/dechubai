@@ -3,8 +3,6 @@ import logo from '../assets/dechub logo.png'
 import { Link, useNavigate } from "react-router-dom";
 import stroke from '../assets/home/stroke.svg'
 import axios from 'axios'
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
 import { toast } from 'react-toastify'
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/UserContext";
@@ -20,24 +18,24 @@ const Login = () => {
 	const [loading, setLoading] = useState(false)
 
 	const navigate = useNavigate()
-	const submitHandler = async (e) => {
-		e.preventDefault();
-		setLoading(true);
-		try {
-			const result = await signInWithEmailAndPassword(auth, email, password);
-			const token = await result.user.getIdToken();
+	// const submitHandler = async (e) => {
+	// 	e.preventDefault();
+	// 	setLoading(true);
+	// 	try {
+	// 		const result = await signInWithEmailAndPassword(auth, email, password);
+	// 		const token = await result.user.getIdToken();
 
 
-			toast.success("Login Successful!");
-			setEmail('');
-			setPassword('');
-			navigate('/');
-			setLoading(false);
-		} catch (err) {
-			setLoading(false);
-			alert(err.message);
-		}
-	};
+	// 		toast.success("Login Successful!");
+	// 		setEmail('');
+	// 		setPassword('');
+	// 		navigate('/');
+	// 		setLoading(false);
+	// 	} catch (err) {
+	// 		setLoading(false);
+	// 		alert(err.message);
+	// 	}
+	// };
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
 			<header className="absolute top-1 flex justify-between w-full items-center px-4">

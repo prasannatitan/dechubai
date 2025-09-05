@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import './toast.css'
 
 import Login from './pages/Login';
-import Signup from './pages/Signup';
 import Home from './pages/Home';
 import Strategic from './pages/Strategic';
 import DigitalExperience from './pages/DigitalExperienceServices';
@@ -23,7 +22,6 @@ import { useAuth } from './context/UserContext';
 const LayoutWrapper = () => {
   const location = useLocation();
   const hideLayout =
-    location.pathname === '/signup' ||
     location.pathname === '/auth' ||
     location.pathname.startsWith('/dashboard');
   const {user} = useAuth();
@@ -36,7 +34,6 @@ const LayoutWrapper = () => {
       <Routes>
         <Route path="/auth-success" element={<Authsuccess />} />
         <Route path="/auth" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
         <Route path="*" element={<PageNotFound />} />
 

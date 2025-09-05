@@ -15,16 +15,16 @@ const authRouteUser = require('./routes/UserAuthRoute');
 const authRouteAdmin = require('./routes/AdminAuthRoute');
 require('./config/passport');
 
-// const allowedOrigins = [
-//   "https://www.dechub.ai",
-//   "https://admin.dechub.ai"
-// ];
+const allowedOrigins = [
+  "https://www.dechub.ai",
+  "https://admin.dechub.ai"
+];
 
-// app.use(cors({
-//   origin: allowedOrigins, 
-//   credentials: true 
-// }));
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins, 
+  credentials: true 
+}));
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
