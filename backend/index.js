@@ -16,7 +16,7 @@ const authRouteAdmin = require('./routes/AdminAuthRoute');
 require('./config/passport');
 
 const allowedOrigins = [
-  "https://www.dechub.ai",
+  "https://dechub.ai",
   "https://admin.dechub.ai"
 ];
 

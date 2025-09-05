@@ -180,8 +180,8 @@ const Dashboard = () => {
                     <img src={bookicon} alt="book" />
                     <h2 className="font-bold  text-[16px]">Task List and Deadlines</h2>
                   </div>
-                  <div className='cursor-pointer bg-gray-300 rounded-full px-2 hover:bg-gray-400 transition-all'>
-                    <button onClick={() => { setTaskadd(true) }} className="cursor-pointer text-purple-600 text-xl">+</button>
+                  <div className='cursor-pointer bg-gray-300 rounded-full px-2 hover:bg-gray-400 transition-all' onClick={() => { setTaskadd(true) }}>
+                    <button className="cursor-pointer text-purple-600 text-xl">+</button>
                   </div>
 
 
