@@ -48,10 +48,7 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  // log when isLoggedIn changes
-  useEffect(() => {
-    console.log("isLoggedIn changed:", isLoggedIn);
-  }, [isLoggedIn]);
+
 
   const logout = async () => {
     try {

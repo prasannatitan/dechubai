@@ -4,6 +4,7 @@ import Plans from './pages/dashboard/Plans';
 import Reports from './pages/dashboard/Reports'
 import Analytics from './pages/dashboard/Analytics'
 import FolderPage from './pages/dashboard/folderPage';
+import CustomerSupportPage from './pages/dashboard/support';
 
 const DashboardRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const DashboardRoutes = () => {
       <Route path="plans" element={<Plans />} />
       <Route path="analytics" element={<Analytics />} />
       <Route path="reports" element={<Reports/>}/>
+      <Route path="support" element={<CustomerSupportPage />} />
     </Routes>
   )
 }

@@ -154,7 +154,7 @@ const Dashboard = () => {
   } else return (
     <Layout>
       <div className='p-6 flex gap-5'>
-        <div className='flex flex-col gap-5 max-w-[850px] w-full'>
+        <div className='flex flex-col gap-5 max-w-full w-full'>
           <div className=' p-3 justify-between w-full h-full flex items-center gap-7 rounded-2xl bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)]'>
             <div className='flex items-center gap-6'>
               <div className='ml-8'>
@@ -224,7 +224,7 @@ const Dashboard = () => {
                           </div>
                           <button
                             type="submit"
-                            className="bg-gray-900 hover:bg-black text-white py-2 px-4 rounded "
+                            className="cursor-pointer bg-gray-900 hover:bg-black text-white py-2 px-4 rounded "
                           >
                             Submit new Task Request
                           </button>
@@ -269,7 +269,7 @@ const Dashboard = () => {
                 <div className="flex items-center gap-2">
 
                   <img src={chart} alt="book" />
-                  <h2 className="font-bold  text-[16px]">Project Statistics</h2>
+                  <h2 className="font-bold  text-[16px]">Project Status</h2>
                 </div>
                 <div className="flex mt-5 justify-between items-center">
                   <div className="w-1/2">
@@ -285,7 +285,7 @@ const Dashboard = () => {
                         <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#3B0764]"></span> Completed
                       </div>
                       <div className="flex items-center font-semibold text-[12px]">
-                        <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#C084FC]"></span> Underprogress
+                        <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#C084FC]"></span> In Progress
                       </div>
                       <div className="flex items-center font-semibold text-[12px]">
                         <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#9333EA]"></span> Needs Revision
@@ -351,12 +351,7 @@ const Dashboard = () => {
 
 
         </div> 
-        <div className='relative'>
-          <div className="sticky top-5 p-6 rounded-xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] bg-[rgba(255,255,255,0.74)]">
-            <h2 className="font-bold  text-[16px]">Book a Meeting</h2>
-            {/* <Meetbooking /> */}
-          </div>
-        </div>
+       
       </div>
     </Layout >
   );

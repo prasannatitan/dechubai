@@ -92,7 +92,7 @@ const HourChart = ({ hoursData = [] }) => {
             <div className="flex justify-between items-center mb-4">
              <div className='flex gap-2'>
                    <img src={daily} alt="" />
-                <h2 className="font-bold  text-[16px]">Daily Report</h2>
+                <h2 className="font-bold  text-[16px]">Report</h2>
              </div>
                 <select
                     value={filter}
@@ -142,7 +142,7 @@ const HourChart = ({ hoursData = [] }) => {
                     <div className="bg-white shadow-md rounded-lg p-4 w-64 border border-gray-200">
                         <div className="flex justify-between items-center">
                             <h3 className="text-[18px] font-semibold text-gray-700">Time Spent</h3>
-                            <span className="text-gray-500 text-sm">•••</span>
+                            
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
                             {filter === 'Monthly' ? 'This month' : 'This week'}

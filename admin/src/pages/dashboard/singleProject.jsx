@@ -19,7 +19,7 @@ import { useAuth } from '../../context/UserContext';
 import Layout from '../../dashboard/Layout'
 import HoursChart from '../../component/hourChart';
 
-import { auth } from '../../firebase';
+
 
 import daily from '../../assets/dashboard/daily.svg'
 
@@ -33,7 +33,7 @@ import penline from '../../assets/dashboard/penline.svg'
 import presentation from '../../assets/dashboard/Presentation.svg';
 
 const singleprojects = () => {
-  
+  const { user } = useAuth();
   const { projectname } = useParams();
   const [dataHours, setDataHours] = useState([]);
   const [Overview, setOverview] = useState([]);
@@ -61,7 +61,7 @@ const singleprojects = () => {
       taskname,
       description,
       admin: admin,
-      from: auth.currentUser.email,
+      from: user.email,
       date: currentDate,
       projectname: projectname
     };
@@ -89,7 +89,6 @@ const singleprojects = () => {
         const allTasks = data.flatMap(doc => doc.task);
         const allStatistics = data.flatMap(doc => doc.Statistics);
         setOverview(allOverview);
-        console.log("over is" + allOverview)
         setTaskdata(allTasks);
         setStatistics(allStatistics)
 
@@ -279,8 +278,8 @@ const singleprojects = () => {
                     <img src={bookicon} alt="book" />
                     <h2 className="font-bold  text-[16px]">Task List and Deadlines</h2>
                   </div>
-                  <div className='cursor-pointer bg-gray-300 rounded-full px-2 hover:bg-gray-400 transition-all'>
-                    <button onClick={() => { setTaskadd(true) }} className="cursor-pointer text-purple-600 text-xl">+</button>
+                  <div className='cursor-pointer bg-gray-300 rounded-full px-2 hover:bg-gray-400 transition-all' onClick={() => { setTaskadd(true) }}>
+                    <button  className="cursor-pointer text-purple-600 text-xl">+</button>
                   </div>
 
 
@@ -322,7 +321,7 @@ const singleprojects = () => {
                           </div>
                           <button
                             type="submit"
-                            className="bg-gray-900 hover:bg-black text-white py-2 px-4 rounded "
+                            className="cursor-pointer bg-gray-900 hover:bg-black text-white py-2 px-4 rounded "
                           >
                             Submit new Task Request
                           </button>
@@ -371,7 +370,7 @@ const singleprojects = () => {
                 <div className="flex items-center gap-2">
 
                   <img src={chart} alt="book" />
-                  <h2 className="font-bold  text-[16px]">Project Statistics</h2>
+                  <h2 className="font-bold  text-[16px]">Project Status</h2>
                 </div>
                 <div className="flex mt-5 justify-between items-center">
                   <div className="w-1/2">
@@ -387,7 +386,7 @@ const singleprojects = () => {
                         <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#3B0764]"></span> Completed
                       </div>
                       <div className="flex items-center font-semibold text-[12px]">
-                        <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#C084FC]"></span> Underprogress
+                        <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#C084FC]"></span> In Progress
                       </div>
                       <div className="flex items-center font-semibold text-[12px]">
                         <span className="inline-block w-3 h-3 mr-2 rounded-full bg-[#9333EA]"></span> Needs Revision

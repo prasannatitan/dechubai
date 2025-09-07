@@ -41,24 +41,25 @@ const sidebar = () => {
             text: "Support",
             url: "/dashboard/support"
         },
-        {
-            icon: settings,
-            text: "Settings",
-            url: "/dashboard/settings"
-        }
+        // {
+        //     icon: settings,
+        //     text: "Settings",
+        //     url: "/dashboard/settings"
+        // }
     ]
 
     
     return (
         <div className=' h-screen w-[255px] '>
-          <div className="fixed bg-[rgba(255,210,210,0.36)] p-5 h-screen">
+          <div className="fixed bg-[rgba(255,210,210,0.36)] p-5 h-screen flex flex-col justify-between">
               <div className='flex gap-2'>
                 <img className='w-[45px]' src={logo} alt="logo" />
                 <p className="font-bold text-[30px] bg-[linear-gradient(119.59deg,#3E0F77_22.24%,#FFB3B3_115.05%,#211331_135.87%)] bg-clip-text text-transparent">Dechub.ai</p>
 
             </div>
-            <div className="mt-8 flex flex-col gap-1">
-                {sidebar.map((itm, idx) => {
+            <div className="mt-8 h-full flex flex-col justify-between gap-1">
+               <div className="flex flex-col gap-1">
+                 {sidebar.map((itm, idx) => {
                     return (
                         <NavLink
                             key={idx}
@@ -74,6 +75,7 @@ const sidebar = () => {
                         </NavLink>
                     )
                 })}
+               </div>
                 <button onClick={logout} className="flex rounded-2xl py-3 px-3 font-bold text-[16px] gap-[12px] hover:bg-[#E1C8FF] cursor-pointer"><img src={logouts} alt="" />Log out</button>
             </div>
           </div>
