@@ -171,7 +171,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className='grid grid-cols-4 gap-5'>
+          <div className='grid grid-cols-4 gap-5 max-w-[850px]'>
             <div className='col-span-2'>
               <div className="relative overflow-hidden bg-[rgba(255,255,255,0.74)] h-full text-gray-800 p-6 rounded-2xl shadow-[11px_6px_15px_rgba(0,0,0,0.11)] w-full max-w-md mx-auto">
                 <div className="flex justify-between items-center mb-4">

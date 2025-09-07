@@ -20,10 +20,13 @@ const layout = ({ children }) => {
             <p className='text-[rgba(32,0,71,1)] font-bold text-[28px]'>Hey User!!</p>
 
            <div className='flex justify-center items-center gap-4'>
-             <div className='flex gap-2 justify-center items-center cursor-pointer  py-[6px] pl-[7px] pr-3 rounded-[10px] '>
+            <div className='flex flex-col items-center p-0'>
+               <div className='flex gap-2 justify-center items-center cursor-pointer  py-[6px]  rounded-[10px] px-0'>
               <span className='bg-[#EBECFF] flex justify-center items-center rounded-full h-5 w-5 font-bold text-[#200047] text-[20px] leading-2 pb-[2px]'>+</span>
                   <Calander/>
               </div>
+              <span className='bg-gray-100 rounded-full h-[1px] w-full'></span>
+            </div>
              <div className='flex items-center justify-center gap-2 cursor-pointer bg-white py-[6px] pl-[7px] pr-3 rounded-[10px] '>
              
               <div className='rounded-full border border-[1px] border-[rgba(63,20,116,1)]'>
