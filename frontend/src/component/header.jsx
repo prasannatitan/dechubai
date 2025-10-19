@@ -36,9 +36,8 @@ const Header = () => {
     }, [])
 
     const menu = [
-        'Product',
         'Solutions',
-        'Services',
+        'Portfolio',
         'Why Dechub.ai',
         'Contact Us'
     ]
@@ -55,7 +54,9 @@ const Header = () => {
                     <ul className='flex lg:gap-10 gap-2 items-center'>
                         {menu.map((menu, idx) => {
                             return (
-                                <li key={idx} className='inline-block mx-4 lg:text-[18px] text-[15px] font-[500] text-[#000000] cursor-pointer'>{menu}</li>
+                                <a key={idx} href={`#${menu.toLowerCase().replace(/\s+/g, '-')}`} >
+                                    <span className='inline-block mx-4 lg:text-[18px] text-[15px] font-[500] text-[#000000] cursor-pointer'>{menu}</span>
+                                </a>
                             )
                         })}
                        
@@ -67,24 +68,24 @@ const Header = () => {
                         
                     </ul>
                 </div>
-                <div onClick={() => setOpen(!open)} className='flex flex-col justify-center cursor-pointer'>
+                {/* <div onClick={() => setOpen(!open)} className='flex flex-col justify-center cursor-pointer'>
                     <span className='lg:w-[33px] w-[25px] rounded-full bg-black h-[3px] flex'></span>
                     <span className='lg:w-[33px] w-[25px] rounded-full bg-black h-[3px] flex mt-2'></span>
-                </div>
+                </div> */}
             </div>
 
             <div className="relative">
 
 
               
-                    <div ref={menuRef} className='absolute top-0 left-0 w-full overflow-hidden bg-white shadow-md transition-[max-height] duration-300 ease-out'
+                    {/* <div ref={menuRef} className='absolute top-0 left-0 w-full overflow-hidden bg-white shadow-md transition-[max-height] duration-300 ease-out'
         style={{ maxHeight: "0px" }}>
                         <ul className="flex flex-col p-4">
                             <li className="p-2">Item 1</li>
                             <li className="p-2">Item 2</li>
                             <li className="p-2">Item 3</li>
                         </ul>
-                    </div>
+                    </div> */}
                 
             </div>
 

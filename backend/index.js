@@ -13,22 +13,23 @@ const cors = require('cors');
 const app = express();
 const authRouteUser = require('./routes/UserAuthRoute');
 const authRouteAdmin = require('./routes/AdminAuthRoute');
+const formsubmit = require('./routes/formsubmit');
 require('./config/passport');
 
-const allowedOrigins = [
-  "https://dechub.ai",
-  "https://admin.dechub.ai"
-];
+// const allowedOrigins = [
+//   "https://dechub.ai",
+//   "https://admin.dechub.ai"
+// ];
 
-app.use(cors({
-  origin: allowedOrigins, 
-  credentials: true 
-}));
-// app.use(cors());
+// app.use(cors({
+//   origin: allowedOrigins, 
+//   credentials: true 
+// }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+app.use('/submit/footer', formsubmit)
 app.use('/auth/user', authRouteUser)
 app.use('/auth/admin', authRouteAdmin)
 app.use('/', imageRoutes);

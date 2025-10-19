@@ -1,6 +1,8 @@
 
 import { useState, useRef, useEffect } from "react"
 import dechubai from '../assets/dechub logo.png'
+import axios from "axios"
+import { toast } from "react-toastify"
 
 const Footer = () => {
     const [email, setEmail] = useState("")
@@ -8,6 +10,7 @@ const Footer = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState(null)
     const dropdownRef = useRef(null)
+    const [loading, setLoading] = useState(false)
 
     const options = [
         { value: "Web Development", label: "Web Development" },
@@ -15,8 +18,26 @@ const Footer = () => {
         { value: "UI/UX", label: "UI/UX" }
     ]
     const formHander = (e) => {
+        setLoading(true)
         e.preventDefault()
-       
+
+        const data = {
+            email,
+            phone,
+            service: selected ? selected.value : ""
+        }
+        axios.post(`${import.meta.env.VITE_BASE_URL}/submit/footer`, data)
+            .then(response => {
+                toast.success("Form submitted successfully!")
+                setEmail("")
+                setPhone("")
+                setSelected(null)
+                setLoading(false)
+            })
+            .catch(error => {
+                console.error("Error submitting form:", error);
+                setLoading(false)
+            });
     }
     const handleSelect = (option) => {
         setSelected(option)
@@ -33,7 +54,7 @@ const Footer = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside)
     }, [])
     return (
-            <footer className="bg-[#000]">
+            <footer className="bg-[#000]" id="contact-us">
                 <div className="max-w-[1440px] md:p-10 md:pb-4 p-5 mx-auto">
                     <div className='p-5 rounded-3xl flex flex-col items-center justify-center w-full bg-[linear-gradient(119.59deg,_#3E0F77_22.24%,_#FFB3B3_115.05%,_#211331_135.87%)] animate-water'>
                         <img className="drop-shadow-[2px_2px_22.3px_rgba(255,200,200,0.71)] h-[70px] w-[70px]" src={dechubai} alt="dechub logo" />
@@ -72,7 +93,7 @@ const Footer = () => {
                                     )}
                                 </div>
                             </div>
-                            <input className="cursor-pointer bg-black text-white rounded-[17px] py-2 px-10" type="submit" />
+                            <input className="cursor-pointer bg-black text-white rounded-[17px] py-2 px-10" type="submit" value={!loading ? "submit" : "Loading..."} />
                         </form>
                     </div>
 
@@ -104,7 +125,7 @@ const Footer = () => {
                                     <svg width="17px" height="28" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M2.66025 1.98518L1.86365 2.18436C1.92138 3.6765 2.22871 5.04694 2.74698 6.26501L4.10418 4.63911C4.33031 4.34814 4.34931 4.31136 4.35865 4.2857C4.37451 4.24203 4.38105 4.19553 4.37791 4.14918C4.37605 4.12166 4.36778 4.0805 4.22705 3.7285L3.75325 2.54401C3.65751 2.30476 3.59925 2.1603 3.54738 2.05487C3.52338 2.00604 3.50631 1.97742 3.49478 1.9604C3.48451 1.94528 3.47945 1.94048 3.47885 1.93989C3.43225 1.89565 3.37385 1.86578 3.31071 1.85392C3.30991 1.85376 3.30298 1.85244 3.28471 1.85299C3.26418 1.85362 3.23098 1.85654 3.17731 1.86566C3.06151 1.88534 2.91025 1.92268 2.66025 1.98518ZM3.40765 7.55421L5.13518 5.48466C5.14011 5.47877 5.14491 5.4728 5.14965 5.46674C5.16278 5.44984 5.17598 5.43296 5.18911 5.41608C5.35452 5.20428 5.52085 4.99132 5.61178 4.74111C5.69111 4.52279 5.72391 4.29028 5.70818 4.05853C5.69005 3.79292 5.58918 3.54226 5.48891 3.29294C5.48091 3.27306 5.47291 3.25319 5.46498 3.23332L4.98298 2.02836C4.89811 1.81614 4.82098 1.6233 4.74378 1.46635C4.66045 1.29688 4.55625 1.12434 4.39705 0.973142C4.16425 0.751955 3.87245 0.602755 3.55678 0.543489C3.34098 0.502975 3.14011 0.519529 2.95391 0.551169C2.78151 0.580475 2.57998 0.630862 2.35825 0.686309C2.35118 0.688089 2.34405 0.689869 2.33692 0.691655L1.02531 1.0196C0.728514 1.0938 0.520382 1.36045 0.520382 1.66635C0.520382 3.95254 1.04525 6.03114 2.00691 7.79361C2.01071 7.80081 2.01465 7.80801 2.01871 7.81514C2.52431 8.73694 3.14971 9.57194 3.88218 10.3044C4.71105 11.1333 5.67111 11.825 6.73978 12.3613C6.74765 12.3653 6.75551 12.3693 6.76351 12.3731C8.44423 13.2116 10.3924 13.6663 12.5204 13.6663C12.8263 13.6663 13.093 13.4581 13.1671 13.1613L13.4949 11.8496L13.5002 11.8283C13.5557 11.6065 13.606 11.4051 13.6354 11.2326C13.667 11.0464 13.6835 10.8455 13.643 10.6297C13.5838 10.3141 13.4346 10.0223 13.2134 9.78948C13.0622 9.63028 12.8896 9.52608 12.7202 9.44274C12.5632 9.36554 12.3704 9.28841 12.1581 9.20354L11.0807 8.77254C11.0579 8.76341 11.035 8.75421 11.0122 8.74501C10.7287 8.63094 10.4441 8.51634 10.1456 8.50714C9.88542 8.49921 9.62701 8.55221 9.39105 8.66208C9.12024 8.78808 8.90379 9.00548 8.68819 9.22208C8.67145 9.23888 8.65471 9.25568 8.63795 9.27241L6.93045 10.9531C6.14805 10.5142 5.44285 9.97941 4.82505 9.36161C4.28665 8.82328 3.81138 8.21854 3.40765 7.55421ZM8.21518 11.5593C9.3585 12.0053 10.6288 12.2699 12.0023 12.3231L12.2013 11.5263C12.2638 11.2763 12.3012 11.125 12.3209 11.0092C12.33 10.9555 12.3329 10.9223 12.3335 10.9018C12.3341 10.8835 12.3328 10.8767 12.3326 10.8759C12.3208 10.8127 12.2909 10.7543 12.2467 10.7077C12.2463 10.7073 12.2416 10.7022 12.2261 10.6917C12.2091 10.6802 12.1805 10.6631 12.1317 10.6391C12.0262 10.5873 11.8818 10.529 11.6425 10.4333L10.5855 10.0105C10.1832 9.84954 10.1352 9.84081 10.1046 9.83988C10.0526 9.83827 10.0009 9.84888 9.95369 9.87088C9.92593 9.88374 9.88529 9.91074 9.57889 10.2171L9.57515 10.2209L8.21518 11.5593Z" fill="white" />
                                     </svg>
-                                    <p className="text-white">+91 123-456-7890</p>
+                                    <p className="text-white">+91 99403-79614</p>
                                 </div>
                                 <div className="flex items-center gap-2 mt-5">
                                     <svg width="16" height="19px" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">

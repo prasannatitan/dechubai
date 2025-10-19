@@ -229,8 +229,8 @@ const Home = () => {
 
                 <img className='max-md:h-[300px] max-md:-mt-43 w-full h-[740px] z-5 -mt-100 z-2 relative' src={round} alt="round" />
             </Section>
-            <Section>
-                <div className='max-w-[1440px] -mt-40 max-lg:-mt-10 max-md:-mt-20 z-5 relative md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
+            <Section >
+                <div id='why-dechub.ai' className='max-w-[1440px] -mt-40 max-lg:-mt-10 max-md:-mt-20 z-5 relative md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
                     <div className='flex max-lg:flex-col'>
                         <div className='w-[55%] max-lg:w-[100%] flex justify-center items-start '>
                             <h3 className='px-9 py-[6px] max-sm:px-7 text-center max-sm:text-[17px] text-[#643A97] font-semibold text-[18px] border-1 border-[rgba(0,0,0,0.31)] rounded-[3px] shadow-[0px_13px_44.4px_rgba(230,174,238,0.52)]'>NEVER START FROM SCRATCH</h3>
@@ -248,7 +248,7 @@ const Home = () => {
 
            
             <Section>
-                <div style={{ backgroundImage: `url(${comboxbg})` }} className='bg-contain bg-no-repeat bg-top-right'>
+                <div style={{ backgroundImage: `url(${comboxbg})` }} id='solutions' className='bg-contain bg-no-repeat bg-top-right'>
                     <div className="max-w-[1440px] mt-5 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10" >
                         <h2 className='text-center text-[40px] font-bold max-lg:text-[35px] max-sm:text-[25px] mt-4 max-md:mt-0'>Our AI-Powered Solutions</h2>
                         <p className='text-[20px] max-md:text-[18px] opacity-[63%] text-center lg:mb-20 mb-10  font-medium'>Want a custom strategy?</p>
@@ -375,7 +375,7 @@ after:absolute after:bg-[#E6AEEE] after:filter after:blur-[304.5px] after:z-1 af
                 </div>
             </Section>
             <Section>
-                <div className='max-w-[1440px] mt-5 mb-25 max-md:mb-15 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
+                <div id='portfolio' className='max-w-[1440px] mt-5 mb-25 max-md:mb-15 md:p-10 md:pb-4 p-5 mx-auto max-lg:mt-10'>
                     <div className='flex justify-center flex-col items-center'>
                         <h2 className='text-center text-[40px] font-bold max-lg:text-[35px] max-sm:text-[25px] mt-4 max-md:mt-0'>What Our AI Tech Produce</h2>
                         <p className='text-[19px] max-md:max-w-[200px] max-md:text-[18px] opacity-[63%] text-center lg:mb-20 mb-10 max-md:leading-[25px] font-medium'>Some of the projects that Dechub.ai have done</p>
