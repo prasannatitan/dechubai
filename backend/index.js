@@ -19,6 +19,8 @@ require('./config/passport');
 const allowedOrigins = [
   "https://dechub.ai",
   "https://admin.dechub.ai"
+  "https://dechubai.vercel.app"
+  "https://dechubai-admin.vercel.app"
 ];
 
 app.use(cors({
